@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>Marking Menu for Chrome Options</title>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+
+var Prefs = chrome.extension.getBackgroundPage().Prefs;
+
+function loadForm() {
+  $("input").each(function(n) { 
+    var idx = this.id.indexOf("-");
+    if (idx > 0) {
+      var key = this.id.substring(0, idx);
+      idx = parseInt(this.id.substr(idx + 1));
+      this.value = Prefs[key][idx];
+    } else {
+      var key = this.id;
+      this.value = Prefs[key];
+    }
+  });
+}
+
+function saveForm() {
+  $("input").each(function(n) {
+    var idx = this.id.indexOf("-");
+    if (idx > 0) {
+      var key = this.id.substring(0, idx);
+      idx = parseInt(this.id.substr(idx + 1));
+      Prefs[key][idx] = this.value;
+    } else {
+      var key = this.id;
+      Prefs[key] = this.value;
+    }
+  });
+  Prefs.save();
+}
+
+function resetForm() {
+  Prefs.reset();
+  loadForm();
+}
+
+$(function() {
+  Prefs.load();
+  loadForm();
+  $("#saveBtn").click(saveForm);
+  $("#resetBtn").click(resetForm);
+});
+
+</script>
+</head>
+<body>
+
+<h1>Marking Menu for Chrome Options</h1>
+Font size: <input id="font-0" type="text" size="4"/> pt<br/>
+Font name: <input id="font-1" type="text" size="30"/><br/>
+Background color: <input id="bg-0" type="text" size="10"/> - <input id="bg-1" type="text" size="10"/><br/>
+Foreground color: <input id="fg-0" type="text" size="10"/> - <input id="fg-1" type="text" size="10"/><br/>
+Active background color: <input id="bgActive" type="text" size="10"/><br/>
+Active foreground color: <input id="fgActive" type="text" size="10"/><br/>
+Border colors: <input id="bdrColors-0" type="text" size="10"/>
+               <input id="bdrColors-1" type="text" size="10"/>
+               <input id="bdrColors-2" type="text" size="10"/>
+               <input id="bdrColors-3" type="text" size="10"/><br/>
+Active border colors: <input id="bdrCrActive-0" type="text" size="10"/>
+                      <input id="bdrCrActive-1" type="text" size="10"/>
+                      <input id="bdrCrActive-2" type="text" size="10"/>
+                      <input id="bdrCrActive-3" type="text" size="10"/><br/>
+Border width: <input id="bdrWidth" type="text" size="4"/> px<br/>
+Shadow color: <input id="shadowColor" type="text" size="20"/><br/>
+Menu opacity: <input id="menuOpacity" type="text" size="5"/><br/>
+Menu item spacing: <input id="itemSpace" type="text" size="5"/> px<br/>
+Menu item padding: <input id="itemPadding-0" type="text" size="5"/> px
+                   <input id="itemPadding-1" type="text" size="5"/> px<br/>
+Ray color: <input id="rayColor" type="text" size="10"/><br/>
+Ray width: <input id="rayWidth" type="text" size="10"/><br/>
+Ray opacity: <input id="rayOpacity" type="text" size="5"/><br/>
+Ray border color: <input id="rayBdrColor" type="text" size="10"/><br/>
+Ray border width: <input id="rayBdrWidth" type="text" size="10"/><br/>
+Ray border opacity: <input id="rayBdrOpacity" type="text" size="5"/><br/>
+<!--Animation: <input id="animation" type="text" size="10"/><br/>
+Copy before search: <input id="animation" type="text" size="10"/><br/>-->
+Popup delay: <input id="popupDelay" type="text" size="10"/> ms<br/>
+Hide delay: <input id="hideDelay" type="text" size="10"/> ms<br/>
+Background commands: <input id="cmdsBg-0" type="text" size="20"/><br/>
+                     <input id="cmdsBg-1" type="text" size="20"/><br/>
+                     <input id="cmdsBg-2" type="text" size="20"/><br/>
+                     <input id="cmdsBg-3" type="text" size="20"/><br/>
+                     <input id="cmdsBg-4" type="text" size="20"/><br/>
+                     <input id="cmdsBg-5" type="text" size="20"/><br/>
+                     <input id="cmdsBg-6" type="text" size="20"/><br/>
+                     <input id="cmdsBg-7" type="text" size="20"/><br/>
+Text commands: <input id="cmdsText-0" type="text" size="20"/><br/>
+               <input id="cmdsText-1" type="text" size="20"/><br/>
+               <input id="cmdsText-2" type="text" size="20"/><br/>
+               <input id="cmdsText-3" type="text" size="20"/><br/>
+               <input id="cmdsText-4" type="text" size="20"/><br/>
+               <input id="cmdsText-5" type="text" size="20"/><br/>
+               <input id="cmdsText-6" type="text" size="20"/><br/>
+               <input id="cmdsText-7" type="text" size="20"/><br/>
+Image commands: <input id="cmdsImg-0" type="text" size="20"/><br/>
+                <input id="cmdsImg-1" type="text" size="20"/><br/>
+                <input id="cmdsImg-2" type="text" size="20"/><br/>
+                <input id="cmdsImg-3" type="text" size="20"/><br/>
+                <input id="cmdsImg-4" type="text" size="20"/><br/>
+                <input id="cmdsImg-5" type="text" size="20"/><br/>
+                <input id="cmdsImg-6" type="text" size="20"/><br/>
+                <input id="cmdsImg-7" type="text" size="20"/><br/>
+Link commands: <input id="cmdsLink-0" type="text" size="20"/><br/>
+               <input id="cmdsLink-1" type="text" size="20"/><br/>
+               <input id="cmdsLink-2" type="text" size="20"/><br/>
+               <input id="cmdsLink-3" type="text" size="20"/><br/>
+               <input id="cmdsLink-4" type="text" size="20"/><br/>
+               <input id="cmdsLink-5" type="text" size="20"/><br/>
+               <input id="cmdsLink-6" type="text" size="20"/><br/>
+               <input id="cmdsLink-7" type="text" size="20"/><br/>
+<button id="saveBtn">Save</button>
+<button id="resetBtn">Reset</button>
+</body>
+</html>

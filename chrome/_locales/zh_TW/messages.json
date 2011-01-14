@@ -1,0 +1,92 @@
+{
+  // background commands
+  "cmdHome": {
+    "message": "首頁"
+  },
+  "cmdTop": {
+    "message": "Page Top"
+  },
+  "cmdNewTab": {
+    "message": "New Tab"
+  },
+  "cmdForward": {
+    "message": "Forward"
+  },
+  "cmdNewWin": {
+    "message": "New Window"
+  },
+  "cmdBottom": {
+    "message": "Page Bottom"
+  },
+  "cmdViewSource": {
+    "message": "View Source"
+  },
+  "cmdBack": {
+    "message": "上一頁"
+  },
+  
+  // image commands
+  "cmdCopyAlt": {
+    "message": "Copy Alternate Text"
+  },
+  "cmdCopyImg": {
+    "message": "Copy Image"
+  },
+  "cmdViewImg": {
+    "message": "View Image"
+  },
+  "cmdSaveImg": {
+    "message": "Save Image"
+  },
+  "cmdCopyImgLoc": {
+    "message": "Copy Image Location"
+  },
+  "cmdViewImgInfo": {
+    "message": "View Image Info"
+  },
+  "cmdSendImg": {
+    "message": "Send Image"
+  },
+  
+  // link commands
+  "cmdBookmark": {
+    "message": "Bookmark"
+  },
+  "cmdCopyLinkText": {
+    "message": "Copy Link Text"
+  },
+  "cmdOpenNewTab": {
+    "message": "Open in New Tab"
+  },
+  "cmdOpenNewWin": {
+    "message": "Open in New Window"
+  },
+  "cmdSaveLink": {
+    "message": "Save Link"
+  },
+  "cmdCopyLink": {
+    "message": "Copy Link"
+  },
+  "cmdSendLink": {
+    "message": "Send Link"
+  },
+  "cmdSelectLink": {
+    "message": "Select Link"
+  },
+  
+  // submit button commands
+  "cmdSubmitNewTab": {
+    "message": "Submit in New Tab"
+  },
+  "cmdSubmitNewWin": {
+    "message": "Submit in New Window"
+  },
+  "cmdCopySubmitLoc": {
+    "message": "Copy Submit Location"
+  },
+  
+  // text field commands
+  "cmdAddSearch": {
+    "message": "Add Search Engine"
+  }
+}

@@ -1,0 +1,70 @@
+<script type="text/javascript">
+
+var Prefs = {
+  reset: function() {
+    this.font = [9, "sans-serif"];
+    this.bg = ["#f7f7f7", "#c6c6c6"];
+    this.fg = ["#000", "#000"];
+    this.bgActive = "#b8bfd3";
+    this.fgActive = "#000";
+    this.bdrCrActive = ["#666", "#666", "#666", "#666"];
+    this.bdrWidth = 1;
+    this.bdrColors = ["#666", "#666", "#666", "#666"];
+    this.shadowColor = "rgba(0,0,0,0.7)";
+    this.menuOpacity = 1;
+    this.itemSpace = 2;
+    this.itemPadding = [2, 30];
+    this.rayColor = "#000";
+    this.rayWidth = 2;
+    this.rayOpacity = 1;
+    this.rayBdrColor = "#f6f6f6";
+    this.rayBdrWidth = 3;
+    this.rayBdrOpacity = 1;
+    this.animation = true;
+    this.copySearch = true;
+    this.popupDelay = 200;
+    this.hideDelay = 200;
+    this.home = "http://www.google.com";
+    this.cmdsBg = ["cmdHome", "cmdTop", "cmdNewTab", "cmdForward",
+                   "cmdNewWin", "cmdBottom", "cmdViewSource", "cmdBack"];
+    this.cmdsText = [0, 1, 2, 3, 4, 5, 6, 7];
+    this.cmdsImg = ["cmdCopyAlt", "cmdCopyImg", "cmdViewImg", "cmdViewImg",
+                    "cmdSaveImg", "cmdCopyImgLoc", "cmdViewImgInfo", "cmdSendImg"];
+    this.cmdsLink = ["cmdBookmark", "cmdCopyLinkText", "cmdOpenNewTab", "cmdOpenNewWin",
+                     "cmdSaveLink", "cmdCopyLink", "cmdSendLink", "cmdSelectLink"];
+    this.cmdsSubmit = [null, null, "cmdSubmitNewTab", "cmdSubmitNewWin",
+                       null, "cmdCopySubmitLoc", null, null];
+    this.cmdsEdit = [null, null, null, null,
+                     "cmdAddSearch", null, null, null];
+    return this;
+  },
+  load: function() {
+    var obj = localStorage["mkmenu-prefs"];
+    if (obj) {
+      obj = JSON.parse( localStorage["mkmenu-prefs"] );
+      for (var i in obj)
+        this[i] = obj[i];
+    } else {
+      this.reset();
+    }
+    return this;
+  },
+  save: function() {
+    localStorage["mkmenu-prefs"] = JSON.stringify(this);
+    return this;
+  },
+};
+Prefs.reset();
+
+var Requests = {
+  getPrefs: function() {
+    return Prefs;
+  }
+};
+
+chrome.extension.onRequest.addListener(function(req, sender, sendResponse) {
+  var result = Requests[req.name](sender);
+  sendResponse(result ? result : {}); 
+});
+
+</script>
