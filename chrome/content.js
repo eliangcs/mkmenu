@@ -462,9 +462,10 @@ var Canvas = function(prefs) {
     position: "absolute",
     left: 0,
     top: 0,
-    background: "#000",
-    opacity: 0.3
+    background: "transparent"
+    //opacity: 0.3
   });
+  this.clearRect = null;
 };
 Canvas.prototype = {
   attach: function(parent) {
@@ -484,6 +485,34 @@ Canvas.prototype = {
       height: h
     });
     return this;
+  },
+  ray: function(fromX, fromY, toX, toY) {
+    var ctx = this.$cvs[0].getContext('2d');
+    if (this.clearRect != null) {
+      var r = this.clearRect;
+      ctx.clearRect(r.x, r.y, r.w, r.h);
+    }
+    ctx.lineCap = "round";
+    var prefs = this.prefs;
+    this._drawLine(ctx, prefs.rayBdrColor, prefs.rayBdrWidth, prefs.rayBdrOpacity, fromX, fromY, toX, toY);
+    this._drawLine(ctx, prefs.rayColor, prefs.rayWidth, prefs.rayOpacity, fromX, fromY, toX, toY);
+    this.clearRect = {
+      x: Math.min(fromX, toX) - 2,
+      y: Math.min(fromY, toY) - 2,
+      w: Math.abs(fromX - toX) + 4,
+      h: Math.abs(fromY - toY) + 4
+    };
+    return this;
+  },
+  _drawLine: function(ctx, lineColor, lineWidth, opacity, fromX, fromY, toX, toY) {
+    ctx.globalAlpha = opacity;
+    ctx.strokeStyle = lineColor;
+    ctx.lineWidth = lineWidth;
+    ctx.beginPath();
+    ctx.moveTo(fromX, fromY);
+    ctx.lineTo(toX, toY);
+    ctx.closePath();
+    ctx.stroke();
   }
 };
 
@@ -515,34 +544,26 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
   var contexts = ["cmdsBg", "cmdsText", "cmdsImg", "cmdsLink", "cmdsSubmit", "cmdsEdit"];
   
   var container = new Container();
-  var canvas = new Canvas();
+  var canvas = new Canvas(prefs);
   var menuSet = {};
   for (var i in contexts)
     menuSet[contexts[i]] = new Menu(prefs, contexts[i]);
-  
-  canvas.$cvs.mousemove(function(event) {
-    console.log("focused");
-  });
-  
+    
   $doc.mousedown(function(event) {
-    if (event.button != 2) return;
+    if (event.button != 2) return;  // only response to right mouse button
     ctx = Utils.getContext(event.target);
     var menu = menuSet[ctx];
     menu.offset(event.clientX, event.clientY);
     menu.hide();
     menu.attach(container.$div);
     canvas.resize();
-    console.log( window.getSelection().toString() );
     canvas.attach(container.$div);
     container.attach();
-    
-    console.log( window.getSelection().toString() );
     
     var scheduleFadeIn = function() {
       popupTimer = setTimeout(function() {
         popped = true;
         menu.fadeIn(200);
-    console.log( window.getSelection().toString() );
       }, prefs.popupDelay);
     };
     scheduleFadeIn();
@@ -551,6 +572,7 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
     var y = event.clientY;
     $doc.bind("mousemove.mkmenu", function(event) {
       var idx = Utils.dragIdx(event.clientX - x, event.clientY - y);
+      canvas.ray(x, y, event.clientX, event.clientY);
       menu.mark(idx);
       if (!popped) {
         clearTimeout(popupTimer);
