@@ -551,6 +551,8 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
     
   $doc.mousedown(function(event) {
     if (event.button != 2) return;  // only response to right mouse button
+    var sel = window.getSelection();
+    var range = sel.getRangeAt(0);
     ctx = Utils.getContext(event.target);
     var menu = menuSet[ctx];
     menu.offset(event.clientX, event.clientY);
@@ -560,10 +562,13 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
     canvas.attach(container.$div);
     container.attach();
     
+    
     var scheduleFadeIn = function() {
       popupTimer = setTimeout(function() {
         popped = true;
         menu.fadeIn(200);
+        window.getSelection().removeAllRanges(); // restore selection
+        window.getSelection().addRange(range);   // for Chrome
       }, prefs.popupDelay);
     };
     scheduleFadeIn();
