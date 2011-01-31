@@ -24,18 +24,17 @@ var Prefs = {
     this.copySearch = true;
     this.popupDelay = 200;
     this.hideDelay = 200;
-    this.home = "http://www.google.com";
-    this.cmdsBg = ["cmdHome", "cmdTop", "cmdNewTab", "cmdForward",
-                   "cmdNewWin", "cmdBottom", "cmdViewSource", "cmdBack"];
-    this.cmdsText = [0, 1, 2, 3, 4, 5, 6, 7];
-    this.cmdsImg = ["cmdCopyAlt", "cmdCopyImg", "cmdViewImg", "cmdViewImg",
-                    "cmdSaveImg", "cmdCopyImgLoc", "cmdViewImgInfo", "cmdSendImg"];
-    this.cmdsLink = ["cmdBookmark", "cmdCopyLinkText", "cmdOpenNewTab", "cmdOpenNewWin",
-                     "cmdSaveLink", "cmdCopyLink", "cmdSendLink", "cmdSelectLink"];
+    this.cmdsBg     = ["cmdHome", "cmdTop", "cmdNewTab", "cmdForward",
+                       "cmdNewWin", "cmdBottom", "cmdViewSource", "cmdBack"];
+    this.cmdsText   = [null, null, null, null, null, null, null, null];
+    this.cmdsImg    = ["cmdCopyAlt", "cmdCopyImg", "cmdViewImg", "cmdViewImg",
+                       "cmdSaveImg", "cmdCopyImgLoc", "cmdViewImgInfo", "cmdSendImg"];
+    this.cmdsLink   = ["cmdBookmark", "cmdCopyLinkText", "cmdOpenNewTab", "cmdOpenNewWin",
+                       "cmdSaveLink", "cmdCopyLink", "cmdSendLink", "cmdSelectLink"];
     this.cmdsSubmit = [null, null, "cmdSubmitNewTab", "cmdSubmitNewWin",
                        null, "cmdCopySubmitLoc", null, null];
-    this.cmdsEdit = [null, null, null, null,
-                     "cmdAddSearch", null, null, null];
+    this.cmdsEdit   = [null, null, null, null,
+                       "cmdAddSearch", null, null, null];
     return this;
   },
   load: function() {
@@ -59,6 +58,28 @@ Prefs.reset();
 var Requests = {
   getPrefs: function() {
     return Prefs;
+  },
+  home: function() {
+    // HACK! create a temp tab to get the home url
+    // set the home url to current tab and remove temp tab
+    chrome.tabs.create({
+        url: undefined,
+        selected: false
+      },
+      function(homeTab) {
+        if (homeTab) {
+          chrome.tabs.getSelected(undefined, function(tab) {
+            if (tab)
+              chrome.tabs.update(tab.id, { url: homeTab.url });
+            chrome.tabs.remove(homeTab.id);
+          });
+        }
+      });
+  },
+  newTab: function() {
+    chrome.tabs.create({
+      url: undefined
+    });
   }
 };
 

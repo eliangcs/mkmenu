@@ -178,6 +178,12 @@ var Utils = {
    *   cmdsBg, cmdsText, cmdsImg, cmdsLink, cmdsSubmit, cmdsEdit. 
    */
   getContext: function(elem) {
+    var sel = window.getSelection();
+    if ( sel.rangeCount > 0 ) {
+        var text = sel.getRangeAt(0).toString();
+        if (text !== "")
+            return "cmdsText";
+    }
     switch (elem.tagName.toLowerCase()) {
       case "a": return "cmdsLink";
       case "img": return "cmdsImg";
@@ -192,11 +198,11 @@ var Utils = {
 var Cmds = {
   cmdTop: function() { $win.scrollTop(0); },
   cmdBottom: function() { $win.scrollTop($doc.height()); },
-  cmdHome: function(prefs) { if (prefs.home) window.location = prefs.home; },
+  cmdHome: function() { chrome.extension.sendRequest({ name: "home" }); },
   cmdBack: function() { history.back(); },
   cmdForward: function() { history.forward(); },
-  cmdNewWindow: function() { chrome.extension.sendRequest({ name: "newWin" }) },
-  cmdNewTab: function() { chrome.extension.sendRequest({ name: "newTab" }) },
+  cmdNewWindow: function() { chrome.extension.sendRequest({ name: "newWin" }); },
+  cmdNewTab: function() { chrome.extension.sendRequest({ name: "newTab" }); }
 };
 
 /**
@@ -284,13 +290,13 @@ Menu.prototype = {
    * @return {Object, String} Menu object itself or command name.
    */
   command: function(idx, cmdName) {
-    if (idx == undefined) {
+    if (idx === undefined) {
       if (this.$activeItem) idx = this.$activeItem.index();
       else return "";
     } 
     var $child = this.$div.children().eq(idx);
-    if (cmdName == undefined) return $child.data("cmd");
-    if (cmdName == "" || cmdName == null) {
+    if (cmdName === undefined) return $child.data("cmd");
+    if (cmdName === "" || cmdName === null) {
       $child.removeData("cmd");
       $child.empty();
       $child.css("visibility", "hidden");
@@ -355,7 +361,7 @@ Menu.prototype = {
    * @return {Object} Menu object itself. Or the position such as { x: 100, y: 300 }.
    */
   offset: function(x, y) {
-    if (x == undefined)
+    if (x === undefined)
       return { x: parseInt(this.$div.css("left")),
                y: parseInt(this.$div.css("top")) };
     this.$div.css({
@@ -365,7 +371,7 @@ Menu.prototype = {
     return this;
   },
   scale: function(factor) {
-    if (factor == undefined) {
+    if (factor === undefined) {
       var t = this.$div.css("-webkit-transform");
       var subject = "scale(";
       var idx = t.indexOf(subject);
@@ -551,24 +557,22 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
     
   $doc.mousedown(function(event) {
     if (event.button != 2) return;  // only response to right mouse button
-    var sel = window.getSelection();
-    var range = sel.getRangeAt(0);
+    //var sel = window.getSelection();
+    //var range = sel.getRangeAt(0);
     ctx = Utils.getContext(event.target);
     var menu = menuSet[ctx];
+    canvas.resize();
     menu.offset(event.clientX, event.clientY);
     menu.hide();
     menu.attach(container.$div);
-    canvas.resize();
-    canvas.attach(container.$div);
     container.attach();
-    
     
     var scheduleFadeIn = function() {
       popupTimer = setTimeout(function() {
         popped = true;
         menu.fadeIn(200);
-        window.getSelection().removeAllRanges(); // restore selection
-        window.getSelection().addRange(range);   // for Chrome
+        //window.getSelection().removeAllRanges(); // restore selection
+        //window.getSelection().addRange(range);   // for Chrome
       }, prefs.popupDelay);
     };
     scheduleFadeIn();
@@ -576,6 +580,7 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
     var x = event.clientX;
     var y = event.clientY;
     $doc.bind("mousemove.mkmenu", function(event) {
+      canvas.attach(container.$div);
       var idx = Utils.dragIdx(event.clientX - x, event.clientY - y);
       canvas.ray(x, y, event.clientX, event.clientY);
       menu.mark(idx);
@@ -590,6 +595,7 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
     $doc.unbind("mousemove.mkmenu");
     clearTimeout(popupTimer);
     if (event.button != 2) return;
+    canvas.detach();
     var menu = menuSet[ctx];
     if (menu.$activeItem) {
       if (!popped) {
