@@ -44,6 +44,12 @@
   "cmdBack": {
     "message": "Back"
   },
+  "cmdPrevTab": {
+    "message": "Previous Tab"
+  },
+  "cmdNextTab": {
+    "message": "Next Tab"
+  },  
   
   // image commands
   "cmdCopyAlt": {

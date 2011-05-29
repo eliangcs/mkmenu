@@ -24,8 +24,8 @@ var Prefs = {
     this.copySearch = true;
     this.popupDelay = 200;
     this.hideDelay = 200;
-    this.cmdsBg     = ["cmdHome", "cmdTop", "cmdNewTab", "cmdForward",
-                       "cmdNewWin", "cmdBottom", "cmdViewSource", "cmdBack"];
+    this.cmdsBg     = ["cmdPrevTab", "cmdTop", "cmdNextTab", "cmdForward",
+                       "cmdNewTab", "cmdBottom", "cmdHome", "cmdBack"];
     this.cmdsText   = [null, null, null, null, null, null, null, null];
     this.cmdsImg    = ["cmdCopyAlt", "cmdCopyImg", "cmdViewImg", "cmdViewImg",
                        "cmdSaveImg", "cmdCopyImgLoc", "cmdViewImgInfo", "cmdSendImg"];
@@ -79,6 +79,28 @@ var Requests = {
   newTab: function() {
     chrome.tabs.create({
       url: undefined
+    });
+  },
+  nextTab: function() {
+    chrome.tabs.getSelected(undefined, function(tab) {
+      for (var i = 0; i < tabs.length; i++) {
+        if (tabs[i].selected) {
+          var idx = (i + 1) % tabs.length;
+          chrome.tabs.update(tabs[idx].id, { selected: true });
+          break;
+        }
+      }
+    });
+  },
+  prevTab: function() {
+    chrome.tabs.getAllInWindow(undefined, function(tabs) {
+      for (var i = 0; i < tabs.length; i++) {
+        if (tabs[i].selected) {
+          var idx = (i - 1) % tabs.length;
+          chrome.tabs.update(tabs[idx].id, { selected: true });
+          break;
+        }
+      }
     });
   }
 };

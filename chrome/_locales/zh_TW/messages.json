@@ -24,6 +24,12 @@
   "cmdBack": {
     "message": "上一頁"
   },
+  "cmdPrevTab": {
+    "message": "Previous Tab"
+  },
+  "cmdNextTab": {
+    "message": "Next Tab"
+  },  
   
   // image commands
   "cmdCopyAlt": {

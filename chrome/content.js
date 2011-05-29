@@ -202,7 +202,9 @@ var Cmds = {
   cmdBack: function() { history.back(); },
   cmdForward: function() { history.forward(); },
   cmdNewWindow: function() { chrome.extension.sendRequest({ name: "newWin" }); },
-  cmdNewTab: function() { chrome.extension.sendRequest({ name: "newTab" }); }
+  cmdNewTab: function() { chrome.extension.sendRequest({ name: "newTab" }); },
+  cmdNextTab: function() { chrome.extension.sendRequest({ name: "nextTab" }); },
+  cmdPrevTab: function() { chrome.extension.sendRequest({ name: "prevTab" }); }
 };
 
 /**
