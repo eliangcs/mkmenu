@@ -13,7 +13,7 @@ var Prefs = {
     this.shadowColor = "rgba(0,0,0,0.7)";
     this.menuOpacity = 1;
     this.itemSpace = 2;
-    this.itemPadding = [2, 30];
+    this.itemPadding = [4, 30];
     this.rayColor = "#000";
     this.rayWidth = 2;
     this.rayOpacity = 1;
@@ -82,7 +82,8 @@ var Requests = {
     });
   },
   nextTab: function() {
-    chrome.tabs.getSelected(undefined, function(tab) {
+    chrome.tabs.getAllInWindow(undefined, function(tabs) {
+      // iterate over all tabs, find the selected one, then change the selected one
       for (var i = 0; i < tabs.length; i++) {
         if (tabs[i].selected) {
           var idx = (i + 1) % tabs.length;
@@ -94,9 +95,10 @@ var Requests = {
   },
   prevTab: function() {
     chrome.tabs.getAllInWindow(undefined, function(tabs) {
+      // iterate over all tabs, find the selected one, then change the selected one
       for (var i = 0; i < tabs.length; i++) {
         if (tabs[i].selected) {
-          var idx = (i - 1) % tabs.length;
+          var idx = i == 0 ? tabs.length - 1 : i - 1;
           chrome.tabs.update(tabs[idx].id, { selected: true });
           break;
         }

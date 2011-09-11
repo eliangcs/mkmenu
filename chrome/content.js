@@ -240,10 +240,11 @@ var Menu = function(prefs, contextName) {
   for (var i = 0; i < 8; i++) {
     var $item = $("<div class='mkmenu-item'>")
       .appendTo(this.$div)
-      .css({  
-        fontSize: prefs.font[0] + "pt", 
+      .css({
+        fontSize: prefs.font[0] + "pt",
         fontFamily: prefs.font[1],
         fontWeight: "normal",
+        lineHeight: prefs.font[0] + "pt",
         background: Utils.itemColor(this.bg[0], this.bg[1], i),
         color: Utils.itemColor(this.fg[0], this.fg[1], i),
         padding: prefs.itemPadding[0] + "px " + prefs.itemPadding[1] + "px",
