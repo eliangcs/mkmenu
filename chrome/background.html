@@ -26,7 +26,8 @@ var Prefs = {
     this.hideDelay = 200;
     this.cmdsBg     = ["cmdPrevTab", "cmdTop", "cmdNextTab", "cmdForward",
                        "cmdNewTab", "cmdBottom", "cmdHome", "cmdBack"];
-    this.cmdsText   = [null, null, null, null, null, null, null, null];
+    this.cmdsText   = ["cmdSearch0", "cmdSearch1", "cmdSearch2", "cmdSearch3",
+                       "cmdSearch4", "cmdSearch5", "cmdSearch6", "cmdSearch7"];
     this.cmdsImg    = ["cmdCopyAlt", "cmdCopyImg", "cmdViewImg", "cmdViewImg",
                        "cmdSaveImg", "cmdCopyImgLoc", "cmdViewImgInfo", "cmdSendImg"];
     this.cmdsLink   = ["cmdBookmark", "cmdCopyLinkText", "cmdOpenNewTab", "cmdOpenNewWin",
@@ -35,6 +36,14 @@ var Prefs = {
                        null, "cmdCopySubmitLoc", null, null];
     this.cmdsEdit   = [null, null, null, null,
                        "cmdAddSearch", null, null, null];
+    this.searchEngines = [{"name": "Amazon", "url": "http://www.amazon.com/s/?field-keywords=%s"},
+                          {"name": "Google", "url": "http://www.google.com/search?q=%s"},
+                          {"name": "Google Images", "url": "http://www.google.com/search?tbm=isch&q=%s"},
+                          {"name": "Google Maps", "url": "http://maps.google.com.tw/maps?q=%s"},
+                          {"name": "Google Translate", "url": "http://translate.google.com/#auto|en|%s"},
+                          {"name": "IMDb", "url": "http://www.imdb.com/find?q=%s"},
+                          {"name": "Wikipedia", "url": "http://en.wikipedia.org/w/index.php?title=Special%3ASearch&search=%s"},
+                          {"name": "YouTube", "url": "http://www.youtube.com/results?search_query=%s"}];
     return this;
   },
   load: function() {
@@ -104,11 +113,25 @@ var Requests = {
         }
       }
     });
+  },
+  search: function(req) {
+    var idx = req.index;
+    var url = Prefs.searchEngines[idx].url;
+    if (url) {
+      url = url.replace("%s", req.keyword);
+      chrome.tabs.getSelected(undefined, function(tab) {
+        chrome.tabs.create({
+          index: tab.index + 1,
+          url: url,
+          selected: true
+        });
+      });
+    }
   }
 };
 
 chrome.extension.onRequest.addListener(function(req, sender, sendResponse) {
-  var result = Requests[req.name](sender);
+  var result = Requests[req.name](req, sender);
   sendResponse(result ? result : {}); 
 });
 

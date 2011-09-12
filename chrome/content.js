@@ -196,15 +196,65 @@ var Utils = {
 };
 
 var Cmds = {
-  cmdTop: function() { $win.scrollTop(0); },
-  cmdBottom: function() { $win.scrollTop($doc.height()); },
-  cmdHome: function() { chrome.extension.sendRequest({ name: "home" }); },
-  cmdBack: function() { history.back(); },
-  cmdForward: function() { history.forward(); },
-  cmdNewWindow: function() { chrome.extension.sendRequest({ name: "newWin" }); },
-  cmdNewTab: function() { chrome.extension.sendRequest({ name: "newTab" }); },
-  cmdNextTab: function() { chrome.extension.sendRequest({ name: "nextTab" }); },
-  cmdPrevTab: function() { chrome.extension.sendRequest({ name: "prevTab" }); }
+  cmdTop: function() {
+    $win.scrollTop(0);
+    return false;
+  },
+  cmdBottom: function() {
+    $win.scrollTop($doc.height());
+    return false;
+  },
+  cmdHome: function() {
+    chrome.extension.sendRequest({ name: "home" });
+    return false;
+  },
+  cmdBack: function() {
+    history.back();
+    return false;
+  },
+  cmdForward: function() {
+    history.forward();
+    return false;
+  },
+  cmdNewWindow: function() {
+    chrome.extension.sendRequest({ name: "newWin" });
+    return false;
+  },
+  cmdNewTab: function() {
+    chrome.extension.sendRequest({ name: "newTab" });
+    return true;
+  },
+  cmdNextTab: function() {
+    chrome.extension.sendRequest({ name: "nextTab" });
+    return true;
+  },
+  cmdPrevTab: function() {
+    chrome.extension.sendRequest({ name: "prevTab" });
+    return true;
+  },
+  
+  search: function(idx) {
+    var sel = window.getSelection();
+    if (sel.rangeCount > 0) {
+      var text = sel.getRangeAt(0).toString();
+      if (text !== "") {
+        chrome.extension.sendRequest({
+          name: "search",
+          index: idx,
+          keyword: text
+        });
+      }
+    }
+    return false;
+  },
+  cmdSearch0: function() { return Cmds.search(0); },
+  cmdSearch1: function() { return Cmds.search(1); },
+  cmdSearch2: function() { return Cmds.search(2); },
+  cmdSearch3: function() { return Cmds.search(3); },
+  cmdSearch4: function() { return Cmds.search(4); },
+  cmdSearch5: function() { return Cmds.search(5); },
+  cmdSearch6: function() { return Cmds.search(6); },
+  cmdSearch7: function() { return Cmds.search(7); }
 };
 
 /**
@@ -267,7 +317,10 @@ var Menu = function(prefs, contextName) {
         "-webkit-box-shadow": "1px 1px 4px " + prefs.shadowColor    
       });
     }
-    this.command(i, prefs[contextName][i]);
+    var cmdLabel = null;
+    if (contextName == "cmdsText")
+      cmdLabel = prefs.searchEngines[i].name;
+    this.command(i, prefs[contextName][i], cmdLabel);
   }
   
   // attaches menu temporarily to trigger the calculation of items' width and height
@@ -292,7 +345,7 @@ Menu.prototype = {
    * @param {Object} cmdName Optional. Command name. Pass an empty string or null to remove a command.
    * @return {Object, String} Menu object itself or command name.
    */
-  command: function(idx, cmdName) {
+  command: function(idx, cmdName, cmdLabel) {
     if (idx === undefined) {
       if (this.$activeItem) idx = this.$activeItem.index();
       else return "";
@@ -305,7 +358,10 @@ Menu.prototype = {
       $child.css("visibility", "hidden");
     } else {
       $child.data("cmd", cmdName);
-      $child.html( L(cmdName) );
+      if (cmdLabel)
+        $child.html(cmdLabel);
+      else
+        $child.html( L(cmdName) );
       $child.css("visibility", "inherit");
     }
     return this;
@@ -608,11 +664,18 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
       }
       
       var func = Cmds[ menu.command() ];
-      if (func) func(prefs, event);
+      var hideInstancely = false;
+      if (func) {
+        hideInstancely = func(prefs, event);
+      }
       
-      menu.ghost(x, y, prefs.hideDelay, 400, function() {
-        container.detach();        
-      });
+      if (hideInstancely) {
+        container.detach();
+      } else {
+        menu.ghost(x, y, prefs.hideDelay, 400, function() {
+          container.detach();        
+        });
+      }
       
       canvas.detach();
       menu.detach();
@@ -624,6 +687,7 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
     }
   });
   
+  // if marking menu is popped, don't show context menu
   $doc.bind("contextmenu", function(event) {
     if (popped) {
       popped = false;
