@@ -1,6 +1,6 @@
 {
-  "name": "Marking Menu for Chrome",
-  "version": "1.0",
+  "name": "mkmenu",
+  "version": "0.9.0",
   "description": "Enhances Google Chrome with marking menu.",
   "icons": { "32": "icon_32.png", "64": "icon_64.png" },
   "default_locale": "en",

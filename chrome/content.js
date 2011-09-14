@@ -11,7 +11,7 @@ var $body = $(document.body);
 /**
  * Gets a localized message.
  * @param {String} msgName Message name.
- * @param {String, Array} substitutions
+ * @param {String, Array} substitutions Optional.
  * @return {String} Localized message.
  */
 function L(msgName, substitutions) {
@@ -343,6 +343,8 @@ Menu.prototype = {
    * Sets/gets/removes command of an item.
    * @param {Number} idx Item index, an integer from 0 to 7.
    * @param {Object} cmdName Optional. Command name. Pass an empty string or null to remove a command.
+   * @param {String} cmdLabel Optional. Readable text displayed on the menu item.
+   *   If not given, use locale text resource.
    * @return {Object, String} Menu object itself or command name.
    */
   command: function(idx, cmdName, cmdLabel) {
