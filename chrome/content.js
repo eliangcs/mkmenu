@@ -275,6 +275,9 @@ var Menu = function(prefs, contextName) {
   this.bg = parseColors(prefs.bg);
   this.fg = parseColors(prefs.fg);
   
+  // distance (in pixels) from center to boundary, will be filled later
+  this.bounds = { left: 0, right: 0, top: 0, bottom: 0 }
+  
   // creates the div representing the menu
   this.$div = $("<div class='mkmenu-menu'>").css({
     opacity: prefs.menuOpacity,
@@ -330,6 +333,12 @@ var Menu = function(prefs, contextName) {
     var w = $item.outerWidth();
     var h = $item.outerHeight();
     var pos = Utils.itemPos(n, w, h, prefs.itemSpace, 0, 0);
+    if (i == 1)  // top item
+      bounds.top = Math.max(-pos.y, bounds.top);
+    else if (i == 5)  // bottom item
+      bounds.bottom = Math.max(pos.y + h, bounds.bottom);
+    if (i >= 1 && i <= 5)  // right items
+      bounds.right = Math.max(pos.x + w, bounds.right);
     $item.css({
       left: pos.x + "px",
       top: pos.y + "px"
