@@ -583,15 +583,15 @@ Canvas.prototype = {
 
 var Container = function() {
   this.$div = $("<div id='mkmenu-container'>").css({
-    position: "absolute",
+    position: "fixed",
     zIndex: 1000000
   });
 };
 Container.prototype = {
   attach: function(parent) {
     this.$div.css({
-      left: $win.scrollLeft(),
-      top: $win.scrollTop()
+      left: 0,
+      top: 0
     }).appendTo(parent || document.body);
     return this;
   },
