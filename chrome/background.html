@@ -86,8 +86,12 @@ var Requests = {
       });
   },
   newTab: function() {
-    chrome.tabs.create({
-      url: undefined
+    chrome.tabs.getSelected(undefined, function(tab) {
+      chrome.tabs.create({
+        index: tab.index + 1,
+        url: undefined,
+        selected: true
+      });
     });
   },
   nextTab: function() {

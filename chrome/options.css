@@ -1,0 +1,48 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+#header {
+  margin: 0 0 20px 0;
+  padding: 15px 40px;
+  color: #546981;
+  font-size: 26px;
+  background: #D6DEE4;
+  font-weight: normal;
+}
+.logo {
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.field-pair {
+  padding-left: 30px;
+  margin-bottom: 15px;
+}
+.field-name {
+  width: 130px;
+  float: left;
+  font-weight: bold;
+  padding-top: 5px;
+}
+.field-value {
+}
+.cell-ortho b {
+  color: #93AFB9;
+}
+.cell-diag b {
+  color: #CA8ECA;
+}
+#search-engine-table td {
+  text-align: center;
+  padding: 5px;
+}
+.cell-diag {
+  background: #ECD7E0;
+}
+.cell-ortho {
+  background: #D6DEE4;
+}
+#saveBtn, #resetBtn {
+  font-size: 14px;
+  padding: 3px 10px;
+}

@@ -1,7 +1,10 @@
-<html>
-<head>
-<title>Marking Menu for Chrome Options</title>
-<script type="text/javascript" src="jquery.js"></script>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+<title>mkmenu Options</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+<link href="options.css" rel="stylesheet" type="text/css"/> 
+<script type="text/javascript" src="jquery-1.6.4.min.js"></script>
 <script type="text/javascript">
 
 var Prefs = chrome.extension.getBackgroundPage().Prefs;
@@ -42,79 +45,87 @@ function resetForm() {
 
 $(function() {
   Prefs.load();
-  loadForm();
+  //loadForm();
+  
+  $(".engine-name").each(function() {
+	console.log(this.value);
+	if (this.value == "") {
+	  this.value = "Search engine name";
+	}
+  });
+  
   $("#saveBtn").click(saveForm);
   $("#resetBtn").click(resetForm);
 });
 
 </script>
-</head>
+</head> 
 <body>
 
-<h1>Marking Menu for Chrome Options</h1>
-Font size: <input id="font-0" type="text" size="4"/> pt<br/>
-Font name: <input id="font-1" type="text" size="30"/><br/>
-Background color: <input id="bg-0" type="text" size="10"/> - <input id="bg-1" type="text" size="10"/><br/>
-Foreground color: <input id="fg-0" type="text" size="10"/> - <input id="fg-1" type="text" size="10"/><br/>
-Active background color: <input id="bgActive" type="text" size="10"/><br/>
-Active foreground color: <input id="fgActive" type="text" size="10"/><br/>
-Border colors: <input id="bdrColors-0" type="text" size="10"/>
-               <input id="bdrColors-1" type="text" size="10"/>
-               <input id="bdrColors-2" type="text" size="10"/>
-               <input id="bdrColors-3" type="text" size="10"/><br/>
-Active border colors: <input id="bdrCrActive-0" type="text" size="10"/>
-                      <input id="bdrCrActive-1" type="text" size="10"/>
-                      <input id="bdrCrActive-2" type="text" size="10"/>
-                      <input id="bdrCrActive-3" type="text" size="10"/><br/>
-Border width: <input id="bdrWidth" type="text" size="4"/> px<br/>
-Shadow color: <input id="shadowColor" type="text" size="20"/><br/>
-Menu opacity: <input id="menuOpacity" type="text" size="5"/><br/>
-Menu item spacing: <input id="itemSpace" type="text" size="5"/> px<br/>
-Menu item padding: <input id="itemPadding-0" type="text" size="5"/> px
-                   <input id="itemPadding-1" type="text" size="5"/> px<br/>
-Ray color: <input id="rayColor" type="text" size="10"/><br/>
-Ray width: <input id="rayWidth" type="text" size="10"/><br/>
-Ray opacity: <input id="rayOpacity" type="text" size="5"/><br/>
-Ray border color: <input id="rayBdrColor" type="text" size="10"/><br/>
-Ray border width: <input id="rayBdrWidth" type="text" size="10"/><br/>
-Ray border opacity: <input id="rayBdrOpacity" type="text" size="5"/><br/>
-<!--Animation: <input id="animation" type="text" size="10"/><br/>
-Copy before search: <input id="animation" type="text" size="10"/><br/>-->
-Popup delay: <input id="popupDelay" type="text" size="10"/> ms<br/>
-Hide delay: <input id="hideDelay" type="text" size="10"/> ms<br/>
-Background commands: <input id="cmdsBg-0" type="text" size="20"/><br/>
-                     <input id="cmdsBg-1" type="text" size="20"/><br/>
-                     <input id="cmdsBg-2" type="text" size="20"/><br/>
-                     <input id="cmdsBg-3" type="text" size="20"/><br/>
-                     <input id="cmdsBg-4" type="text" size="20"/><br/>
-                     <input id="cmdsBg-5" type="text" size="20"/><br/>
-                     <input id="cmdsBg-6" type="text" size="20"/><br/>
-                     <input id="cmdsBg-7" type="text" size="20"/><br/>
-Text commands: <input id="cmdsText-0" type="text" size="20"/><br/>
-               <input id="cmdsText-1" type="text" size="20"/><br/>
-               <input id="cmdsText-2" type="text" size="20"/><br/>
-               <input id="cmdsText-3" type="text" size="20"/><br/>
-               <input id="cmdsText-4" type="text" size="20"/><br/>
-               <input id="cmdsText-5" type="text" size="20"/><br/>
-               <input id="cmdsText-6" type="text" size="20"/><br/>
-               <input id="cmdsText-7" type="text" size="20"/><br/>
-Image commands: <input id="cmdsImg-0" type="text" size="20"/><br/>
-                <input id="cmdsImg-1" type="text" size="20"/><br/>
-                <input id="cmdsImg-2" type="text" size="20"/><br/>
-                <input id="cmdsImg-3" type="text" size="20"/><br/>
-                <input id="cmdsImg-4" type="text" size="20"/><br/>
-                <input id="cmdsImg-5" type="text" size="20"/><br/>
-                <input id="cmdsImg-6" type="text" size="20"/><br/>
-                <input id="cmdsImg-7" type="text" size="20"/><br/>
-Link commands: <input id="cmdsLink-0" type="text" size="20"/><br/>
-               <input id="cmdsLink-1" type="text" size="20"/><br/>
-               <input id="cmdsLink-2" type="text" size="20"/><br/>
-               <input id="cmdsLink-3" type="text" size="20"/><br/>
-               <input id="cmdsLink-4" type="text" size="20"/><br/>
-               <input id="cmdsLink-5" type="text" size="20"/><br/>
-               <input id="cmdsLink-6" type="text" size="20"/><br/>
-               <input id="cmdsLink-7" type="text" size="20"/><br/>
-<button id="saveBtn">Save</button>
-<button id="resetBtn">Reset</button>
+<h1 id="header"><img src="icon_64.png" alt="mkmenu" width="64" height="64" class="logo"/>mkmenu Options</h1>
+<div class="field-pair">
+  <div class="field-name">Search engines</div>
+  <div class="field-value">
+    <table id="search-engine-table">
+      <tr>
+        <td class="cell-diag">
+          <b>NW</b><br/>
+          <input type="text" name="engine-name-0" size="25" maxlength="40" class="engine-name" value="f"/><br/>
+          <input type="text" name="engine-url-0" size="25" maxlength="255" class="engine-url" value="taeta"/>
+        </td>
+        <td class="cell-ortho">
+          <b>N</b><br/>
+          <input type="text" name="engine-name-1" size="25" maxlength="40" class="engine-name" value=""/><br/>
+          <input type="text" name="engine-url-1" size="25" maxlength="255" class="engine-url" value=""/>
+        </td>
+        <td class="cell-diag">
+          <b>NE</b><br/>
+          <input type="text" name="engine-name-2" size="25" maxlength="40" class="engine-name" value=""/><br/>
+          <input type="text" name="engine-url-2" size="25" maxlength="255" class="engine-url" value=""/>
+        </td>
+      </tr>
+      <tr>
+        <td class="cell-ortho">
+          <b>W</b><br/>
+          <input type="text" name="engine-name-7" size="25" maxlength="40" class="engine-name" value=""/><br/>
+          <input type="text" name="engine-url-7" size="25" maxlength="255" class="engine-url" value=""/>
+        </td>
+        <td class="cell-center">&nbsp;</td>
+        <td class="cell-ortho">
+          <b>E</b><br/>
+          <input type="text" name="engine-name-3" size="25" maxlength="40" class="engine-name" value=""/><br/>
+          <input type="text" name="engine-url-3" size="25" maxlength="255" class="engine-url" value=""/>
+        </td>
+      </tr>
+      <tr>
+        <td class="cell-diag">
+          <b>SW</b><br/>
+          <input type="text" name="engine-name-6" size="25" maxlength="40" class="engine-name" value=""/><br/>
+          <input type="text" name="engine-url-6" size="25" maxlength="255" class="engine-url" value=""/>
+        </td>
+        <td class="cell-ortho">
+          <b>S</b><br/>
+          <input type="text" name="engine-name-5" size="25" maxlength="40" class="engine-name" value=""/><br/>
+          <input type="text" name="engine-url-5" size="25" maxlength="255" class="engine-url" value=""/>
+        </td>
+        <td class="cell-diag">
+          <b>SE</b><br/>
+          <input type="text" name="engine-name-4" size="25" maxlength="40" class="engine-name" value=""/><br/>
+          <input type="text" name="engine-url-4" size="25" maxlength="255" class="engine-url" value=""/>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="field-pair">
+  <div class="field-name">&nbsp;</div>
+  <div class="field-value">
+    <button id="saveBtn">Save</button>
+    <button id="resetBtn">Reset</button>
+  </div>
+</div>
+
+
 </body>
 </html>

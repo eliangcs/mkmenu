@@ -184,10 +184,11 @@ var Utils = {
         if (text !== "")
             return "cmdsText";
     }
-    switch (elem.tagName.toLowerCase()) {
+    // TODO: support link and image context menu
+    /*switch (elem.tagName.toLowerCase()) {
       case "a": return "cmdsLink";
       case "img": return "cmdsImg";
-    }
+    }*/
     return "cmdsBg";
   },
   ease: function (t) {
@@ -327,18 +328,22 @@ var Menu = function(prefs, contextName) {
   }
   
   // attaches menu temporarily to trigger the calculation of items' width and height
+  bounds = this.bounds;
   this.attach();
   this.$div.children().each(function(n) {
     var $item = $(this);
     var w = $item.outerWidth();
     var h = $item.outerHeight();
     var pos = Utils.itemPos(n, w, h, prefs.itemSpace, 0, 0);
-    if (i == 1)  // top item
+    // compute boundary
+    if (n == 1)  // top item
       bounds.top = Math.max(-pos.y, bounds.top);
-    else if (i == 5)  // bottom item
+    else if (n == 5)  // bottom item
       bounds.bottom = Math.max(pos.y + h, bounds.bottom);
-    if (i >= 1 && i <= 5)  // right items
+    if (n >= 1 && n <= 5)  // right items
       bounds.right = Math.max(pos.x + w, bounds.right);
+    if (n == 0 || n == 1 || (n >= 5 && n <= 7))  // left items
+      bounds.left = Math.max(-pos.x, bounds.left);
     $item.css({
       left: pos.x + "px",
       top: pos.y + "px"
@@ -632,7 +637,23 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
     ctx = Utils.getContext(event.target);
     var menu = menuSet[ctx];
     canvas.resize();
-    menu.offset(event.clientX, event.clientY);
+    // boundary check
+    var winWidth = $win.width();
+    var winHeight = $win.height();
+    var fixedX = event.clientX;
+    var fixedY = event.clientY;
+    if (fixedX - menu.bounds.left < 0) {
+      fixedX += menu.bounds.left - fixedX;
+    } else if (fixedX + menu.bounds.right > winWidth) {
+      fixedX -= fixedX + menu.bounds.right - winWidth;
+    }
+    if (fixedY - menu.bounds.top < 0) {
+      fixedY += menu.bounds.top - fixedY;
+    } else if (fixedY + menu.bounds.bottom > winHeight) {
+      fixedY -= fixedY + menu.bounds.bottom - winHeight;
+    }
+    //menu.offset(event.clientX, event.clientY);
+    menu.offset(fixedX, fixedY);
     menu.hide();
     menu.attach(container.$div);
     container.attach();
@@ -647,17 +668,23 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
     };
     scheduleFadeIn();
     
-    var x = event.clientX;
-    var y = event.clientY;
+    // mouse position when pressed
+    var pressedX = event.clientX;
+    var pressedY = event.clientY;
     $doc.bind("mousemove.mkmenu", function(event) {
       canvas.attach(container.$div);
-      var idx = Utils.dragIdx(event.clientX - x, event.clientY - y);
-      canvas.ray(x, y, event.clientX, event.clientY);
-      menu.mark(idx);
-      if (!popped) {
+      if (popped) {
+        var x = fixedX;
+        var y = fixedY;
+      } else {
+        var x = pressedX;
+        var y = pressedY;
         clearTimeout(popupTimer);
         scheduleFadeIn();
       }
+      var idx = Utils.dragIdx(event.clientX - x, event.clientY - y);
+      menu.mark(idx);
+      canvas.ray(x, y, event.clientX, event.clientY);
     });
   });
   
