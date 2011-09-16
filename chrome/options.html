@@ -9,16 +9,43 @@
 
 var Prefs = chrome.extension.getBackgroundPage().Prefs;
 
+function L(msgName, substitutions) {
+  return chrome.i18n.getMessage(msgName, substitutions);
+}
+
 function loadForm() {
-  $("input").each(function(n) { 
-    var idx = this.id.indexOf("-");
-    if (idx > 0) {
-      var key = this.id.substring(0, idx);
-      idx = parseInt(this.id.substr(idx + 1));
-      this.value = Prefs[key][idx];
+  for (var i = 0; i < Prefs.searchEngines.length; i++) {
+    var engine = Prefs.searchEngines[i];
+    if (engine.name != "" && engine.url != "") {
+      $("#engine-name-" + i).val(engine.name).removeClass("empty-field");
+      $("#engine-url-" + i).val(engine.url).removeClass("empty-field");
     } else {
-      var key = this.id;
-      this.value = Prefs[key];
+      $("#engine-name-" + i).val(L("optEngineNameHint")).addClass("empty-field");
+      $("#engine-url-" + i).val(L("optEngineURLHint")).addClass("empty-field");
+    }
+  }
+}
+
+function setupFieldsHint(cssSelector, hintMsgName) {
+  $(cssSelector).focus(function() {
+    var $this = $(this);
+    if ($this.hasClass("empty-field")) {
+      $this.val("").removeClass("empty-field");
+    }
+  }).blur(function() {
+    var $this = $(this);
+    if ($this.val() == "") {
+      $this.val(L(hintMsgName)).addClass("empty-field");
+    }
+  });
+}
+
+function replaceLocaleMessages() {
+  $(".locale-msg").each(function() {
+    var $this = $(this);
+    var msgName = $this.html();
+    if (msgName != "") {
+      $this.html(L(msgName));
     }
   });
 }
@@ -45,17 +72,13 @@ function resetForm() {
 
 $(function() {
   Prefs.load();
-  //loadForm();
-  
-  $(".engine-name").each(function() {
-	console.log(this.value);
-	if (this.value == "") {
-	  this.value = "Search engine name";
-	}
-  });
-  
-  $("#saveBtn").click(saveForm);
-  $("#resetBtn").click(resetForm);
+  loadForm();
+  setupFieldsHint(".engine-name", "optEngineNameHint");
+  setupFieldsHint(".engine-url", "optEngineURLHint");
+  replaceLocaleMessages();
+    
+  $("#save-btn").click(saveForm);
+  $("#reset-btn").click(resetForm);
 });
 
 </script>
@@ -64,54 +87,54 @@ $(function() {
 
 <h1 id="header"><img src="icon_64.png" alt="mkmenu" width="64" height="64" class="logo"/>mkmenu Options</h1>
 <div class="field-pair">
-  <div class="field-name">Search engines</div>
+  <div class="field-name"><span class="locale-msg">optCaptionSearchEngines</span></div>
   <div class="field-value">
     <table id="search-engine-table">
       <tr>
         <td class="cell-diag">
           <b>NW</b><br/>
-          <input type="text" name="engine-name-0" size="25" maxlength="40" class="engine-name" value="f"/><br/>
-          <input type="text" name="engine-url-0" size="25" maxlength="255" class="engine-url" value="taeta"/>
+          <input type="text" id="engine-name-0" name="engine-name-0" size="25" maxlength="40" class="engine-name empty-field" value="f"/><br/>
+          <input type="text" id="engine-url-0" name="engine-url-0" size="25" maxlength="255" class="engine-url empty-field" value="taeta"/>
         </td>
         <td class="cell-ortho">
           <b>N</b><br/>
-          <input type="text" name="engine-name-1" size="25" maxlength="40" class="engine-name" value=""/><br/>
-          <input type="text" name="engine-url-1" size="25" maxlength="255" class="engine-url" value=""/>
+          <input type="text" id="engine-name-1" name="engine-name-1" size="25" maxlength="40" class="engine-name empty-field" value=""/><br/>
+          <input type="text" id="engine-url-1" name="engine-url-1" size="25" maxlength="255" class="engine-url empty-field" value=""/>
         </td>
         <td class="cell-diag">
           <b>NE</b><br/>
-          <input type="text" name="engine-name-2" size="25" maxlength="40" class="engine-name" value=""/><br/>
-          <input type="text" name="engine-url-2" size="25" maxlength="255" class="engine-url" value=""/>
+          <input type="text" id="engine-name-2" name="engine-name-2" size="25" maxlength="40" class="engine-name empty-field" value=""/><br/>
+          <input type="text" id="engine-url-2" name="engine-url-2" size="25" maxlength="255" class="engine-url empty-field" value=""/>
         </td>
       </tr>
       <tr>
         <td class="cell-ortho">
           <b>W</b><br/>
-          <input type="text" name="engine-name-7" size="25" maxlength="40" class="engine-name" value=""/><br/>
-          <input type="text" name="engine-url-7" size="25" maxlength="255" class="engine-url" value=""/>
+          <input type="text" id="engine-name-7" name="engine-name-7" size="25" maxlength="40" class="engine-name empty-field" value=""/><br/>
+          <input type="text" id="engine-url-7" name="engine-url-7" size="25" maxlength="255" class="engine-url empty-field" value=""/>
         </td>
         <td class="cell-center">&nbsp;</td>
         <td class="cell-ortho">
           <b>E</b><br/>
-          <input type="text" name="engine-name-3" size="25" maxlength="40" class="engine-name" value=""/><br/>
-          <input type="text" name="engine-url-3" size="25" maxlength="255" class="engine-url" value=""/>
+          <input type="text" id="engine-name-3" name="engine-name-3" size="25" maxlength="40" class="engine-name empty-field" value=""/><br/>
+          <input type="text" id="engine-url-3" name="engine-url-3" size="25" maxlength="255" class="engine-url empty-field" value=""/>
         </td>
       </tr>
       <tr>
         <td class="cell-diag">
           <b>SW</b><br/>
-          <input type="text" name="engine-name-6" size="25" maxlength="40" class="engine-name" value=""/><br/>
-          <input type="text" name="engine-url-6" size="25" maxlength="255" class="engine-url" value=""/>
+          <input type="text" id="engine-name-6" name="engine-name-6" size="25" maxlength="40" class="engine-name empty-field" value=""/><br/>
+          <input type="text" id="engine-url-6" name="engine-url-6" size="25" maxlength="255" class="engine-url empty-field" value=""/>
         </td>
         <td class="cell-ortho">
           <b>S</b><br/>
-          <input type="text" name="engine-name-5" size="25" maxlength="40" class="engine-name" value=""/><br/>
-          <input type="text" name="engine-url-5" size="25" maxlength="255" class="engine-url" value=""/>
+          <input type="text" id="engine-name-5" name="engine-name-5" size="25" maxlength="40" class="engine-name empty-field" value=""/><br/>
+          <input type="text" id="engine-url-5" name="engine-url-5" size="25" maxlength="255" class="engine-url empty-field" value=""/>
         </td>
         <td class="cell-diag">
           <b>SE</b><br/>
-          <input type="text" name="engine-name-4" size="25" maxlength="40" class="engine-name" value=""/><br/>
-          <input type="text" name="engine-url-4" size="25" maxlength="255" class="engine-url" value=""/>
+          <input type="text" id="engine-name-4" name="engine-name-4" size="25" maxlength="40" class="engine-name empty-field" value=""/><br/>
+          <input type="text" id="engine-url-4" name="engine-url-4" size="25" maxlength="255" class="engine-url empty-field" value=""/>
         </td>
       </tr>
     </table>
@@ -121,8 +144,8 @@ $(function() {
 <div class="field-pair">
   <div class="field-name">&nbsp;</div>
   <div class="field-value">
-    <button id="saveBtn">Save</button>
-    <button id="resetBtn">Reset</button>
+    <button id="save-btn">Save</button>
+    <button id="reset-btn">Reset</button>
   </div>
 </div>
 

@@ -19,7 +19,7 @@ body {
   margin-bottom: 15px;
 }
 .field-name {
-  width: 130px;
+  width: 150px;
   float: left;
   font-weight: bold;
   padding-top: 5px;
@@ -42,7 +42,10 @@ body {
 .cell-ortho {
   background: #D6DEE4;
 }
-#saveBtn, #resetBtn {
+.empty-field {
+  color: #AAA;
+}
+#save-btn, #reset-btn {
   font-size: 14px;
   padding: 3px 10px;
 }

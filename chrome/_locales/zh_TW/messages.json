@@ -1,7 +1,27 @@
 {
+  // context names
+  "cmdsBg": {
+    "message": "Background"
+  },
+  "cmdsText": {
+    "message": "Text"
+  },
+  "cmdsLink": {
+    "message": "Links"
+  },
+  "cmdsImg": {
+    "message": "Images"
+  },
+  "cmdsEdit": {
+    "message": "Text Fields"
+  },
+  "cmdsSubmit": {
+    "message": "Submit Buttons"
+  },
+  
   // background commands
   "cmdHome": {
-    "message": "首頁"
+    "message": "Home"
   },
   "cmdTop": {
     "message": "Page Top"
@@ -22,7 +42,7 @@
     "message": "View Source"
   },
   "cmdBack": {
-    "message": "上一頁"
+    "message": "Back"
   },
   "cmdPrevTab": {
     "message": "Previous Tab"
@@ -94,5 +114,13 @@
   // text field commands
   "cmdAddSearch": {
     "message": "Add Search Engine"
+  },
+  
+  // options
+  "optEngineNameHint": {
+    "message": "Search engine name"
+  },
+  "optEngineURLHint": {
+    "message": "URL with %s in place of query"
   }
 }

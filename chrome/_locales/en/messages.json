@@ -114,5 +114,16 @@
   // text field commands
   "cmdAddSearch": {
     "message": "Add Search Engine"
+  },
+  
+  // options
+  "optCaptionSearchEngines": {
+    "message": "Search engines:"
+  },
+  "optEngineNameHint": {
+    "message": "Search engine name"
+  },
+  "optEngineURLHint": {
+    "message": "URL with %s in place of query"
   }
 }
