@@ -55,9 +55,10 @@ var Prefs = {
   load: function() {
     var obj = localStorage["mkmenu-prefs"];
     if (obj) {
-      obj = JSON.parse( localStorage["mkmenu-prefs"] );
-      for (var i in obj)
+      obj = JSON.parse(localStorage["mkmenu-prefs"]);
+      for (var i in obj) {
         this[i] = obj[i];
+      }
     } else {
       this.reset();
     }
@@ -66,7 +67,7 @@ var Prefs = {
   save: function() {
     localStorage["mkmenu-prefs"] = JSON.stringify(this);
     return this;
-  },
+  }
 };
 Prefs.reset();
 

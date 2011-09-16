@@ -1,126 +1,122 @@
 {
-  // context names
   "cmdsBg": {
-    "message": "Background"
+    "message": "背景"
   },
   "cmdsText": {
-    "message": "Text"
+    "message": "文字"
   },
   "cmdsLink": {
-    "message": "Links"
+    "message": "連結"
   },
   "cmdsImg": {
-    "message": "Images"
+    "message": "影像"
   },
   "cmdsEdit": {
-    "message": "Text Fields"
+    "message": "文字欄位"
   },
   "cmdsSubmit": {
-    "message": "Submit Buttons"
+    "message": "送出鈕"
   },
   
-  // background commands
   "cmdHome": {
-    "message": "Home"
+    "message": "首頁"
   },
   "cmdTop": {
-    "message": "Page Top"
+    "message": "頁首"
   },
   "cmdNewTab": {
-    "message": "New Tab"
+    "message": "開新分頁"
   },
   "cmdForward": {
-    "message": "Forward"
+    "message": "下一頁"
   },
   "cmdNewWin": {
-    "message": "New Window"
+    "message": "開新視窗"
   },
   "cmdBottom": {
-    "message": "Page Bottom"
+    "message": "頁尾"
   },
   "cmdViewSource": {
-    "message": "View Source"
+    "message": "檢查原始碼"
   },
   "cmdBack": {
-    "message": "Back"
+    "message": "上一頁"
   },
   "cmdPrevTab": {
-    "message": "Previous Tab"
+    "message": "左分頁"
   },
   "cmdNextTab": {
-    "message": "Next Tab"
+    "message": "右分頁"
   },  
   
-  // image commands
   "cmdCopyAlt": {
-    "message": "Copy Alternate Text"
+    "message": "複製註解文字"
   },
   "cmdCopyImg": {
-    "message": "Copy Image"
+    "message": "複製影像"
   },
   "cmdViewImg": {
-    "message": "View Image"
+    "message": "檢視影像"
   },
   "cmdSaveImg": {
-    "message": "Save Image"
+    "message": "另存影像"
   },
   "cmdCopyImgLoc": {
-    "message": "Copy Image Location"
+    "message": "複製影像網址"
   },
   "cmdViewImgInfo": {
-    "message": "View Image Info"
+    "message": "檢視影像資訊"
   },
   "cmdSendImg": {
-    "message": "Send Image"
+    "message": "寄送影像"
   },
   
-  // link commands
   "cmdBookmark": {
-    "message": "Bookmark"
+    "message": "加入書籤"
   },
   "cmdCopyLinkText": {
-    "message": "Copy Link Text"
+    "message": "複製連結文字"
   },
   "cmdOpenNewTab": {
-    "message": "Open in New Tab"
+    "message": "開在新分頁"
   },
   "cmdOpenNewWin": {
-    "message": "Open in New Window"
+    "message": "開在新視窗"
   },
   "cmdSaveLink": {
-    "message": "Save Link"
+    "message": "另存連結"
   },
   "cmdCopyLink": {
-    "message": "Copy Link"
+    "message": "複製連結"
   },
   "cmdSendLink": {
-    "message": "Send Link"
+    "message": "寄送連結"
   },
   "cmdSelectLink": {
-    "message": "Select Link"
+    "message": "選取連結"
   },
   
-  // submit button commands
   "cmdSubmitNewTab": {
-    "message": "Submit in New Tab"
+    "message": "在新分頁送出"
   },
   "cmdSubmitNewWin": {
-    "message": "Submit in New Window"
+    "message": "在新視窗送出"
   },
   "cmdCopySubmitLoc": {
-    "message": "Copy Submit Location"
+    "message": "複製送出網址"
   },
   
-  // text field commands
   "cmdAddSearch": {
-    "message": "Add Search Engine"
+    "message": "加入搜尋引擎"
   },
   
-  // options
+  "optCaptionSearchEngines": {
+    "message": "搜尋引擎:"
+  },
   "optEngineNameHint": {
-    "message": "Search engine name"
+    "message": "搜尋引擎的名稱"
   },
   "optEngineURLHint": {
-    "message": "URL with %s in place of query"
+    "message": "網址，用 %s 代替關鍵字"
   }
 }

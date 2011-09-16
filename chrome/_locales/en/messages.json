@@ -1,5 +1,4 @@
 {
-  // context names
   "cmdsBg": {
     "message": "Background"
   },
@@ -19,7 +18,6 @@
     "message": "Submit Buttons"
   },
   
-  // background commands
   "cmdHome": {
     "message": "Home"
   },
@@ -51,7 +49,6 @@
     "message": "Next Tab"
   },  
   
-  // image commands
   "cmdCopyAlt": {
     "message": "Copy Alternate Text"
   },
@@ -74,7 +71,6 @@
     "message": "Send Image"
   },
   
-  // link commands
   "cmdBookmark": {
     "message": "Bookmark"
   },
@@ -100,7 +96,6 @@
     "message": "Select Link"
   },
   
-  // submit button commands
   "cmdSubmitNewTab": {
     "message": "Submit in New Tab"
   },
@@ -111,12 +106,10 @@
     "message": "Copy Submit Location"
   },
   
-  // text field commands
   "cmdAddSearch": {
     "message": "Add Search Engine"
   },
   
-  // options
   "optCaptionSearchEngines": {
     "message": "Search engines:"
   },

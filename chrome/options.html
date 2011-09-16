@@ -15,13 +15,18 @@ function L(msgName, substitutions) {
 
 function loadForm() {
   for (var i = 0; i < Prefs.searchEngines.length; i++) {
+    var $nameField = $("#engine-name-" + i);
+    var $urlField = $("#engine-url-" + i);
     var engine = Prefs.searchEngines[i];
-    if (engine.name != "" && engine.url != "") {
-      $("#engine-name-" + i).val(engine.name).removeClass("empty-field");
-      $("#engine-url-" + i).val(engine.url).removeClass("empty-field");
+    if (engine.name != "") {
+      $nameField.val(engine.name).removeClass("empty-field");
     } else {
-      $("#engine-name-" + i).val(L("optEngineNameHint")).addClass("empty-field");
-      $("#engine-url-" + i).val(L("optEngineURLHint")).addClass("empty-field");
+      $nameField.val(L("optEngineNameHint")).addClass("empty-field");
+    }
+    if (engine.url != "") {
+      $urlField.val(engine.url).removeClass("empty-field");
+    } else {
+      $urlField.val(L("optEngineURLHint")).addClass("empty-field");
     }
   }
 }
@@ -51,17 +56,19 @@ function replaceLocaleMessages() {
 }
 
 function saveForm() {
-  $("input").each(function(n) {
-    var idx = this.id.indexOf("-");
-    if (idx > 0) {
-      var key = this.id.substring(0, idx);
-      idx = parseInt(this.id.substr(idx + 1));
-      Prefs[key][idx] = this.value;
+  for (var i = 0; i < 8; i++) {
+    var $nameField = $("#engine-name-" + i);
+    var $urlField = $("#engine-url-" + i);
+    var nameEmpty = $nameField.hasClass("empty-field");
+    var urlEmpty = $urlField.hasClass("empty-field");
+    if (nameEmpty || urlEmpty) {
+      Prefs.cmdsText[i] = null;
     } else {
-      var key = this.id;
-      Prefs[key] = this.value;
+      Prefs.cmdsText[i] = "cmdSearch" + i;
     }
-  });
+    Prefs.searchEngines[i].name = nameEmpty ? "" : $nameField.val();
+    Prefs.searchEngines[i].url = urlEmpty ? "" : $urlField.val();
+  }
   Prefs.save();
 }
 
@@ -76,16 +83,29 @@ $(function() {
   setupFieldsHint(".engine-name", "optEngineNameHint");
   setupFieldsHint(".engine-url", "optEngineURLHint");
   replaceLocaleMessages();
-    
-  $("#save-btn").click(saveForm);
-  $("#reset-btn").click(resetForm);
+   
+  $("input").change(function() {
+    $("#save-btn").removeAttr("disabled");
+    $("#reset-btn").removeAttr("disabled");
+  });
+   
+  $("#save-btn").click(function() {
+    $(this).attr("disabled", "disabled");
+    saveForm();
+  });
+  
+  $("#reset-btn").click(function() {
+    $(this).attr("disabled", "disabled");
+    $("#save-btn").removeAttr("disabled");
+    resetForm();
+  });
 });
 
 </script>
 </head> 
 <body>
 
-<h1 id="header"><img src="icon_64.png" alt="mkmenu" width="64" height="64" class="logo"/>mkmenu Options</h1>
+<h1 id="header"><img src="icon_48.png" alt="mkmenu" width="48" height="48" class="logo"/>mkmenu Options</h1>
 <div class="field-pair">
   <div class="field-name"><span class="locale-msg">optCaptionSearchEngines</span></div>
   <div class="field-value">
