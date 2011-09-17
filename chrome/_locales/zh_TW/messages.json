@@ -97,10 +97,10 @@
   },
   
   "cmdSubmitNewTab": {
-    "message": "在新分頁送出"
+    "message": "送出至新分頁"
   },
   "cmdSubmitNewWin": {
-    "message": "在新視窗送出"
+    "message": "送出至新視窗"
   },
   "cmdCopySubmitLoc": {
     "message": "複製送出網址"
@@ -110,6 +110,9 @@
     "message": "加入搜尋引擎"
   },
   
+  "optCaptionOptions": {
+    "message": "選項"
+  },
   "optCaptionSearchEngines": {
     "message": "搜尋引擎:"
   },
@@ -118,5 +121,11 @@
   },
   "optEngineURLHint": {
     "message": "網址，用 %s 代替關鍵字"
+  },
+  "optSave": {
+    "message": "儲存"
+  },
+  "optReset": {
+    "message": "重設"
   }
 }

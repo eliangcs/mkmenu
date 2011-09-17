@@ -1,5 +1,5 @@
 /*   
- * Copyright 2011, Chang-Hung Liang
+ * Copyright 2011 Chang-Hung Liang
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -517,7 +517,7 @@ Menu.prototype = {
       var center = $clonedMenu.offset();
       x = Math.round(x + $win.scrollLeft() - center.left - $clonedItem.outerWidth() / 2);
       y = Math.round(y + $win.scrollTop() - center.top - $clonedItem.outerHeight() / 2);
-      $clonedItem.css({ left: x + "px", top: y + "px", });
+      $clonedItem.css({ left: x + "px", top: y + "px" });
       $clonedMenu.css("visibility", "visible");
     }
     setTimeout(function() {

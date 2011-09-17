@@ -110,6 +110,9 @@
     "message": "Add Search Engine"
   },
   
+  "optCaptionOptions": {
+    "message": "Options"
+  },
   "optCaptionSearchEngines": {
     "message": "Search engines:"
   },
@@ -118,5 +121,11 @@
   },
   "optEngineURLHint": {
     "message": "URL with %s in place of query"
+  },
+  "optSave": {
+    "message": "Save"
+  },
+  "optReset": {
+    "message": "Reset"
   }
 }

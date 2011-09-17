@@ -1,0 +1,131 @@
+{
+  "cmdsBg": {
+    "message": "背景"
+  },
+  "cmdsText": {
+    "message": "文字"
+  },
+  "cmdsLink": {
+    "message": "链结"
+  },
+  "cmdsImg": {
+    "message": "图片"
+  },
+  "cmdsEdit": {
+    "message": "文字栏位"
+  },
+  "cmdsSubmit": {
+    "message": "提交钮"
+  },
+  
+  "cmdHome": {
+    "message": "主页"
+  },
+  "cmdTop": {
+    "message": "页首"
+  },
+  "cmdNewTab": {
+    "message": "新建标签页"
+  },
+  "cmdForward": {
+    "message": "前进"
+  },
+  "cmdNewWin": {
+    "message": "新建窗口"
+  },
+  "cmdBottom": {
+    "message": "页尾"
+  },
+  "cmdViewSource": {
+    "message": "查看源代码"
+  },
+  "cmdBack": {
+    "message": "返回"
+  },
+  "cmdPrevTab": {
+    "message": "左标签页"
+  },
+  "cmdNextTab": {
+    "message": "右标签页"
+  },  
+  
+  "cmdCopyAlt": {
+    "message": "复制注解文字"
+  },
+  "cmdCopyImg": {
+    "message": "复制图片"
+  },
+  "cmdViewImg": {
+    "message": "查看图片"
+  },
+  "cmdSaveImg": {
+    "message": "另存图片"
+  },
+  "cmdCopyImgLoc": {
+    "message": "复制图片网址"
+  },
+  "cmdViewImgInfo": {
+    "message": "查看图片信息"
+  },
+  "cmdSendImg": {
+    "message": "寄送图片"
+  },
+  
+  "cmdBookmark": {
+    "message": "添加书签"
+  },
+  "cmdCopyLinkText": {
+    "message": "复制链结文字"
+  },
+  "cmdOpenNewTab": {
+    "message": "开在新标签页"
+  },
+  "cmdOpenNewWin": {
+    "message": "开在新窗口"
+  },
+  "cmdSaveLink": {
+    "message": "另存链结"
+  },
+  "cmdCopyLink": {
+    "message": "复制链结"
+  },
+  "cmdSendLink": {
+    "message": "寄送链结"
+  },
+  "cmdSelectLink": {
+    "message": "选取链结"
+  },
+  
+  "cmdSubmitNewTab": {
+    "message": "提交至新标签页"
+  },
+  "cmdSubmitNewWin": {
+    "message": "提交至新窗口"
+  },
+  "cmdCopySubmitLoc": {
+    "message": "复制提交网址"
+  },
+  
+  "cmdAddSearch": {
+    "message": "添加搜寻引擎"
+  },
+  
+  "optCaptionOptions": {
+    "message": "选项"
+  },
+  "optCaptionSearchEngines": {
+    "message": "搜寻引擎:"
+  },
+  "optEngineNameHint": {
+    "message": "搜寻引擎的名称"
+  },
+  "optEngineURLHint": {
+    "message": "网址，用 %s 代替关键字"
+  },
+  "optSave": {
+    "message": "储存"
+  },
+  "optReset": {
+    "message": "重设"
+  }
+}
