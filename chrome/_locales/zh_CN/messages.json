@@ -113,6 +113,9 @@
   "optCaptionOptions": {
     "message": "选项"
   },
+  "optCaptionModKey": {
+    "message": "辅助键:"
+  },
   "optCaptionSearchEngines": {
     "message": "搜寻引擎:"
   },

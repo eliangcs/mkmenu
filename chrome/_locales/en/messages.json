@@ -113,6 +113,9 @@
   "optCaptionOptions": {
     "message": "Options"
   },
+  "optCaptionModKey": {
+    "message": "Modifier key:"
+  },
   "optCaptionSearchEngines": {
     "message": "Search engines:"
   },

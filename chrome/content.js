@@ -649,6 +649,8 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
     
   $doc.mousedown(function(event) {
     if (event.button != 2) return;  // only response to right mouse button
+    if (prefs.modKey == "ctrl" && !event.ctrlKey) return;
+    if (prefs.modKey == "alt" && !event.altKey) return;
     //var sel = window.getSelection();
     //var range = sel.getRangeAt(0);
     ctx = Utils.getContext(event.target);

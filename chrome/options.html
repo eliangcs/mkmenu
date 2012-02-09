@@ -14,6 +14,7 @@ function L(msgName, substitutions) {
 }
 
 function loadForm() {
+  $("#modifier-key-" + Prefs.modKey).prop("checked", true);
   for (var i = 0; i < Prefs.searchEngines.length; i++) {
     var $nameField = $("#engine-name-" + i);
     var $urlField = $("#engine-url-" + i);
@@ -56,6 +57,7 @@ function replaceLocaleMessages() {
 }
 
 function saveForm() {
+  Prefs.modKey = $("input[name='modifier-key']:checked").val();
   for (var i = 0; i < 8; i++) {
     var $nameField = $("#engine-name-" + i);
     var $urlField = $("#engine-url-" + i);
@@ -106,6 +108,14 @@ $(function() {
 <body>
 
 <h1 id="header"><img src="icon_48.png" alt="mkmenu" width="48" height="48" class="logo"/>mkmenu <span class="locale-msg">optCaptionOptions</span></h1>
+<div class="field-pair">
+  <div class="field-name"><span class="locale-msg">optCaptionModKey</span></div>
+  <div class="field-value">
+    <input type="radio" id="modifier-key-none" name="modifier-key" value="none" checked="checked"/><label for="modifier-key-none">None</label>
+    <input type="radio" id="modifier-key-ctrl" name="modifier-key" value="ctrl"/><label for="modifier-key-ctrl">Ctrl</label>
+    <input type="radio" id="modifier-key-alt" name="modifier-key" value="alt"/><label for="modifier-key-alt">Alt/Option</label>
+  </div>
+</div>
 <div class="field-pair">
   <div class="field-name"><span class="locale-msg">optCaptionSearchEngines</span></div>
   <div class="field-value">
