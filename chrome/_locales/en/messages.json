@@ -116,8 +116,47 @@
   "optCaptionModKey": {
     "message": "Modifier key:"
   },
+  "optNone": {
+    "message": "None"
+  },
+  "optCaptionMouseButton": {
+    "message": "Mouse button:"
+  },
+  "optLMB": {
+    "message": "Left"
+  },
+  "optMMB": {
+    "message": "Middle"
+  },
+  "optRMB": {
+    "message": "Right"
+  },
   "optCaptionSearchEngines": {
     "message": "Search engines:"
+  },
+  "optNW": {
+    "message": "NW"
+  },
+  "optN": {
+    "message": "N"
+  },
+  "optNE": {
+    "message": "NE"
+  },
+  "optE": {
+    "message": "E"
+  },
+  "optSE": {
+    "message": "SE"
+  },
+  "optS": {
+    "message": "S"
+  },
+  "optSW": {
+    "message": "SW"
+  },
+  "optW": {
+    "message": "W"
   },
   "optEngineNameHint": {
     "message": "Search engine name"
@@ -130,5 +169,14 @@
   },
   "optReset": {
     "message": "Reset"
+  },
+  "optSaveHint": {
+    "message": "(Settings not saved yet)"
+  },
+  "optFeedbackPrompt": {
+    "message": "Got any feedbacks? Write a review on "
+  },
+  "optDonatePrompt": {
+    "message": "mkmenu is free, and will always be free. If you like my work, you are welcome to buy me a drink :)"
   }
 }

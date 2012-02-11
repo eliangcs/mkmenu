@@ -114,10 +114,49 @@
     "message": "选项"
   },
   "optCaptionModKey": {
-    "message": "辅助键:"
+    "message": "辅助键："
+  },
+  "optNone": {
+    "message": "无"
+  },
+  "optCaptionMouseButton": {
+    "message": "鼠标："
+  },
+  "optLMB": {
+    "message": "左键"
+  },
+  "optMMB": {
+    "message": "中键"
+  },
+  "optRMB": {
+    "message": "右键"
   },
   "optCaptionSearchEngines": {
-    "message": "搜寻引擎:"
+    "message": "搜寻引擎："
+  },
+  "optNW": {
+    "message": "西北"
+  },
+  "optN": {
+    "message": "北"
+  },
+  "optNE": {
+    "message": "东北"
+  },
+  "optE": {
+    "message": "东"
+  },
+  "optSE": {
+    "message": "东南"
+  },
+  "optS": {
+    "message": "南"
+  },
+  "optSW": {
+    "message": "西南"
+  },
+  "optW": {
+    "message": "西"
   },
   "optEngineNameHint": {
     "message": "搜寻引擎的名称"
@@ -130,5 +169,14 @@
   },
   "optReset": {
     "message": "重设"
+  },
+  "optSaveHint": {
+    "message": "（设置尚未储存）"
+  },
+  "optFeedbackPrompt": {
+    "message": "有任何竟见吗？大声说出来："
+  },
+  "optDonatePrompt": {
+    "message": "mkmenu 完全免费，但如果你喜欢，欢迎请我喝一杯 :)"
   }
 }

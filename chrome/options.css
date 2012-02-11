@@ -19,13 +19,15 @@ body {
   margin-bottom: 15px;
 }
 .field-name {
-  width: 150px;
+  width: 135px;
   float: left;
-  font-weight: bold;
   padding-top: 5px;
+  padding-right: 15px;
+  text-align: right;
 }
 .field-value {
   padding: 5px 0;
+  font-size: 13px;
 }
 .cell-ortho b {
   color: #93AFB9;
@@ -49,4 +51,20 @@ body {
 #save-btn, #reset-btn {
   font-size: 14px;
   padding: 3px 10px;
+}
+#save-hint {
+  color: #c22;
+  display: none;
+}
+#footer {
+  margin: 30px 20px 0 175px;
+  padding: 5px 10px;
+  border-top: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 1.7em;
+}
+#feedback {
+  margin-bottom: 3px;
+}
+#donate-block {
 }

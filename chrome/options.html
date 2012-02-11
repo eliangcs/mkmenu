@@ -1,3 +1,20 @@
+<!--  
+ * Copyright 2011 Chang-Hung Liang
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 <head> 
@@ -15,6 +32,7 @@ function L(msgName, substitutions) {
 
 function loadForm() {
   $("#modifier-key-" + Prefs.modKey).prop("checked", true);
+  $("#mouse-button-" + Prefs.mouseButton).prop("checked", true);
   for (var i = 0; i < Prefs.searchEngines.length; i++) {
     var $nameField = $("#engine-name-" + i);
     var $urlField = $("#engine-url-" + i);
@@ -58,6 +76,7 @@ function replaceLocaleMessages() {
 
 function saveForm() {
   Prefs.modKey = $("input[name='modifier-key']:checked").val();
+  Prefs.mouseButton = parseInt($("input[name='mouse-button']:checked").val());
   for (var i = 0; i < 8; i++) {
     var $nameField = $("#engine-name-" + i);
     var $urlField = $("#engine-url-" + i);
@@ -89,80 +108,108 @@ $(function() {
   $("input").change(function() {
     $("#save-btn").removeAttr("disabled");
     $("#reset-btn").removeAttr("disabled");
+    $("#save-hint").css("display", "inline");
   });
    
   $("#save-btn").click(function() {
     $(this).attr("disabled", "disabled");
     saveForm();
+    $("#save-hint").css("display", "none");
   });
   
   $("#reset-btn").click(function() {
     $(this).attr("disabled", "disabled");
     $("#save-btn").removeAttr("disabled");
     resetForm();
+    $("#save-hint").css("display", "inline");
   });
 });
 
 </script>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+    (function() {
+        var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+        t.parentNode.insertBefore(s, t);
+    })();
+/* ]]> */</script>
+
 </head> 
 <body>
 
 <h1 id="header"><img src="icon_48.png" alt="mkmenu" width="48" height="48" class="logo"/>mkmenu <span class="locale-msg">optCaptionOptions</span></h1>
+
+<!-- Modifier Key -->
 <div class="field-pair">
   <div class="field-name"><span class="locale-msg">optCaptionModKey</span></div>
   <div class="field-value">
-    <input type="radio" id="modifier-key-none" name="modifier-key" value="none" checked="checked"/><label for="modifier-key-none">None</label>
+    <input type="radio" id="modifier-key-none" name="modifier-key" value="none" checked="checked"/><label for="modifier-key-none"><span class="locale-msg">optNone</span></label>
     <input type="radio" id="modifier-key-ctrl" name="modifier-key" value="ctrl"/><label for="modifier-key-ctrl">Ctrl</label>
     <input type="radio" id="modifier-key-alt" name="modifier-key" value="alt"/><label for="modifier-key-alt">Alt/Option</label>
   </div>
 </div>
+
+<!-- Mouse Button -->
+<div class="field-pair">
+  <div class="field-name"><span class="locale-msg">optCaptionMouseButton</span></div>
+  <div class="field-value">
+    <input type="radio" id="mouse-button-1" name="mouse-button" value="1"/><label for="mouse-button-1"><span class="locale-msg">optMMB</span></label>
+    <input type="radio" id="mouse-button-2" name="mouse-button" value="2" checked="checked"/><label for="mouse-button-2"><span class="locale-msg">optRMB</a></label>
+  </div>
+</div>
+
+<!-- Search Engines -->
 <div class="field-pair">
   <div class="field-name"><span class="locale-msg">optCaptionSearchEngines</span></div>
   <div class="field-value">
     <table id="search-engine-table">
       <tr>
         <td class="cell-diag">
-          <b>NW</b><br/>
+          <b><span class="locale-msg">optNW</span></b><br/>
           <input type="text" id="engine-name-0" name="engine-name-0" size="25" maxlength="40" class="engine-name empty-field" value="f"/><br/>
           <input type="text" id="engine-url-0" name="engine-url-0" size="25" maxlength="255" class="engine-url empty-field" value="taeta"/>
         </td>
         <td class="cell-ortho">
-          <b>N</b><br/>
+          <b><span class="locale-msg">optN</span></b><br/>
           <input type="text" id="engine-name-1" name="engine-name-1" size="25" maxlength="40" class="engine-name empty-field" value=""/><br/>
           <input type="text" id="engine-url-1" name="engine-url-1" size="25" maxlength="255" class="engine-url empty-field" value=""/>
         </td>
         <td class="cell-diag">
-          <b>NE</b><br/>
+          <b><span class="locale-msg">optNE</span></b><br/>
           <input type="text" id="engine-name-2" name="engine-name-2" size="25" maxlength="40" class="engine-name empty-field" value=""/><br/>
           <input type="text" id="engine-url-2" name="engine-url-2" size="25" maxlength="255" class="engine-url empty-field" value=""/>
         </td>
       </tr>
       <tr>
         <td class="cell-ortho">
-          <b>W</b><br/>
+          <b><span class="locale-msg">optW</span></b><br/>
           <input type="text" id="engine-name-7" name="engine-name-7" size="25" maxlength="40" class="engine-name empty-field" value=""/><br/>
           <input type="text" id="engine-url-7" name="engine-url-7" size="25" maxlength="255" class="engine-url empty-field" value=""/>
         </td>
         <td class="cell-center">&nbsp;</td>
         <td class="cell-ortho">
-          <b>E</b><br/>
+          <b><span class="locale-msg">optE</span></b><br/>
           <input type="text" id="engine-name-3" name="engine-name-3" size="25" maxlength="40" class="engine-name empty-field" value=""/><br/>
           <input type="text" id="engine-url-3" name="engine-url-3" size="25" maxlength="255" class="engine-url empty-field" value=""/>
         </td>
       </tr>
       <tr>
         <td class="cell-diag">
-          <b>SW</b><br/>
+          <b><span class="locale-msg">optSW</span></b><br/>
           <input type="text" id="engine-name-6" name="engine-name-6" size="25" maxlength="40" class="engine-name empty-field" value=""/><br/>
           <input type="text" id="engine-url-6" name="engine-url-6" size="25" maxlength="255" class="engine-url empty-field" value=""/>
         </td>
         <td class="cell-ortho">
-          <b>S</b><br/>
+          <b><span class="locale-msg">optS</span></b><br/>
           <input type="text" id="engine-name-5" name="engine-name-5" size="25" maxlength="40" class="engine-name empty-field" value=""/><br/>
           <input type="text" id="engine-url-5" name="engine-url-5" size="25" maxlength="255" class="engine-url empty-field" value=""/>
         </td>
         <td class="cell-diag">
-          <b>SE</b><br/>
+          <b><span class="locale-msg">optSE</span></b><br/>
           <input type="text" id="engine-name-4" name="engine-name-4" size="25" maxlength="40" class="engine-name empty-field" value=""/><br/>
           <input type="text" id="engine-url-4" name="engine-url-4" size="25" maxlength="255" class="engine-url empty-field" value=""/>
         </td>
@@ -171,11 +218,25 @@ $(function() {
   </div>
 </div>
 
+<!-- Save & Reset Buttons -->
 <div class="field-pair">
   <div class="field-name">&nbsp;</div>
   <div class="field-value">
-    <button id="save-btn"><span class="locale-msg">optSave</span></button>
+    <button id="save-btn" disabled="disabled"><span class="locale-msg">optSave</span></button>
     <button id="reset-btn"><span class="locale-msg">optReset</span></button>
+    <span id="save-hint" class="locale-msg">optSaveHint</span>
+  </div>
+</div>
+
+<!-- Feedbacks & Donation -->
+<div id="footer">
+  <div id="feedback">
+    <span class="locale-msg">optFeedbackPrompt</span><a href="https://chrome.google.com/webstore/detail/alpbibdlkmjaigmkdjphnpceibcjbeak/reviews" target="_blank">Web Store</a>
+  </div>
+  <div id="donate-block">
+    <span class="locale-msg">optDonatePrompt</span><br/>
+    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Q78KL2SM8X8Y4" target="_blank"><img src="https://www.paypal.com/en_US/i/btn/btn_donate_SM.gif" alt="Donate via Paypal" border="0"/></a>
+    <a href="http://flattr.com/thing/397843/mkmenu" target="_blank"><img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a>
   </div>
 </div>
 

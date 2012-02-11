@@ -114,10 +114,49 @@
     "message": "選項"
   },
   "optCaptionModKey": {
-    "message": "輔助鍵:"
+    "message": "輔助鍵："
+  },
+  "optNone": {
+    "message": "無"
+  },
+  "optCaptionMouseButton": {
+    "message": "滑鼠："
+  },
+  "optLMB": {
+    "message": "左鍵"
+  },
+  "optMMB": {
+    "message": "中鍵"
+  },
+  "optRMB": {
+    "message": "右鍵"
   },
   "optCaptionSearchEngines": {
-    "message": "搜尋引擎:"
+    "message": "搜尋引擎："
+  },
+  "optNW": {
+    "message": "西北"
+  },
+  "optN": {
+    "message": "北"
+  },
+  "optNE": {
+    "message": "東北"
+  },
+  "optE": {
+    "message": "東"
+  },
+  "optSE": {
+    "message": "東南"
+  },
+  "optS": {
+    "message": "南"
+  },
+  "optSW": {
+    "message": "西南"
+  },
+  "optW": {
+    "message": "西"
   },
   "optEngineNameHint": {
     "message": "搜尋引擎的名稱"
@@ -130,5 +169,14 @@
   },
   "optReset": {
     "message": "重設"
+  },
+  "optSaveHint": {
+    "message": "（設定值尚未儲存）"
+  },
+  "optFeedbackPrompt": {
+    "message": "有任何意見嗎？大聲說出來："
+  },
+  "optDonatePrompt": {
+    "message": "mkmenu 完全免費，但如果你喜歡，歡迎請我喝一杯 :)"
   }
 }

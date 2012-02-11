@@ -648,7 +648,7 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
     menuSet[contexts[i]] = new Menu(prefs, contexts[i]);
     
   $doc.mousedown(function(event) {
-    if (event.button != 2) return;  // only response to right mouse button
+    if (event.button != prefs.mouseButton) return;  // only response to mouse button that is set in preferences
     if (prefs.modKey == "ctrl" && !event.ctrlKey) return;
     if (prefs.modKey == "alt" && !event.altKey) return;
     //var sel = window.getSelection();
@@ -710,7 +710,7 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
   $doc.mouseup(function(event) {
     $doc.unbind("mousemove.mkmenu");
     clearTimeout(popupTimer);
-    if (event.button != 2) return;
+    if (event.button != prefs.mouseButton) return;
     canvas.detach();
     var menu = menuSet[ctx];
     if (menu.$activeItem) {
