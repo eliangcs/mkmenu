@@ -1,6 +1,6 @@
-/*   
+/*
  * Copyright 2011 Chang-Hung Liang
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-    
+
 /**
  * Item indices.
  */
@@ -104,7 +104,7 @@ var Utils = {
          r: parseInt( arr[0] ),
          g: parseInt( arr[1] ),
          b: parseInt( arr[2] ),
-         a: arr[4] == undefined ? 1 : Math.max(0, Math.min(1, parseFloat(arr[4])))  
+         a: arr[4] == undefined ? 1 : Math.max(0, Math.min(1, parseFloat(arr[4])))
        };
     }
     return { r: 0, g: 0, b: 0, a: 1 };
@@ -192,7 +192,7 @@ var Utils = {
    * From a DOM element to a context name.
    * @param {DOMElement} elem
    * @return {String} Context name. Could be one of these:
-   *   cmdsBg, cmdsText, cmdsImg, cmdsLink, cmdsSubmit, cmdsEdit. 
+   *   cmdsBg, cmdsText, cmdsImg, cmdsLink, cmdsSubmit, cmdsEdit.
    */
   getContext: function(elem) {
     var sel = window.getSelection();
@@ -250,7 +250,7 @@ var Cmds = {
     chrome.extension.sendRequest({ name: "prevTab" });
     return true;
   },
-  
+
   search: function(idx) {
     var sel = window.getSelection();
     if (sel.rangeCount > 0) {
@@ -279,7 +279,7 @@ var Cmds = {
  * Menu constructor.
  * @param {Object} prefs An object storing prefernces.
  * @param {String} contextName Could be one of these:
- *   cmdsBg, cmdsText, cmdsImg, cmdsLink, cmdsSubmit, cmdsEdit. 
+ *   cmdsBg, cmdsText, cmdsImg, cmdsLink, cmdsSubmit, cmdsEdit.
  */
 var Menu = function(prefs, contextName) {
   // parses colors in prefs
@@ -292,10 +292,10 @@ var Menu = function(prefs, contextName) {
   this.prefs = prefs;
   this.bg = parseColors(prefs.bg);
   this.fg = parseColors(prefs.fg);
-  
+
   // distance (in pixels) from center to boundary, will be filled later
   this.bounds = { left: 0, right: 0, top: 0, bottom: 0 }
-  
+
   // creates the div representing the menu
   this.$div = $("<div class='mkmenu-menu'>").css({
     opacity: prefs.menuOpacity,
@@ -306,7 +306,7 @@ var Menu = function(prefs, contextName) {
     height: "auto",
     visibility: "hidden"  // temporary hidden
   });
-  
+
   // creates menu items and applies styles to them
   for (var i = 0; i < 8; i++) {
     var $item = $("<div class='mkmenu-item'>")
@@ -335,7 +335,7 @@ var Menu = function(prefs, contextName) {
     if (prefs.shadowColor) {
       $item.css({
         //"-moz-box-shadow": "1px 1px 4px " + prefs.shadowColor,
-        "-webkit-box-shadow": "1px 1px 4px " + prefs.shadowColor    
+        "-webkit-box-shadow": "1px 1px 4px " + prefs.shadowColor
       });
     }
     var cmdLabel = null;
@@ -343,7 +343,7 @@ var Menu = function(prefs, contextName) {
       cmdLabel = prefs.searchEngines[i].name;
     this.command(i, prefs[contextName][i], cmdLabel);
   }
-  
+
   // attaches menu temporarily to trigger the calculation of items' width and height
   bounds = this.bounds;
   this.attach();
@@ -382,7 +382,7 @@ Menu.prototype = {
     if (idx === undefined) {
       if (this.$activeItem) idx = this.$activeItem.index();
       else return "";
-    } 
+    }
     var $child = this.$div.children().eq(idx);
     if (cmdName === undefined) return $child.data("cmd");
     if (cmdName === "" || cmdName === null) {
@@ -635,18 +635,18 @@ Container.prototype = {
 };
 
 chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
-  
+
   var popped = false;  // is a menu or an item shown?
   var ctx = null;      // current context name
   var popupTimer = 0;  // popup timeout ID
   var contexts = ["cmdsBg", "cmdsText", "cmdsImg", "cmdsLink", "cmdsSubmit", "cmdsEdit"];
-  
+
   var container = new Container();
   var canvas = new Canvas(prefs);
   var menuSet = {};
   for (var i in contexts)
     menuSet[contexts[i]] = new Menu(prefs, contexts[i]);
-    
+
   $doc.mousedown(function(event) {
     if (event.button != prefs.mouseButton) return;  // only response to mouse button that is set in preferences
     if (prefs.modKey == "ctrl" && !event.ctrlKey) return;
@@ -676,7 +676,7 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
     menu.hide();
     menu.attach(container.$div);
     container.attach();
-    
+
     var scheduleFadeIn = function() {
       popupTimer = setTimeout(function() {
         popped = true;
@@ -686,7 +686,7 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
       }, prefs.popupDelay);
     };
     scheduleFadeIn();
-    
+
     // mouse position when pressed
     var pressedX = event.clientX;
     var pressedY = event.clientY;
@@ -706,7 +706,7 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
       canvas.ray(x, y, event.clientX, event.clientY);
     });
   });
-  
+
   $doc.mouseup(function(event) {
     $doc.unbind("mousemove.mkmenu");
     clearTimeout(popupTimer);
@@ -719,21 +719,21 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
         var x = event.clientX;
         var y = event.clientY;
       }
-      
+
       var func = Cmds[ menu.command() ];
       var hideInstancely = false;
       if (func) {
         hideInstancely = func(prefs, event);
       }
-      
+
       if (hideInstancely) {
         container.detach();
       } else {
         menu.ghost(x, y, prefs.hideDelay, 400, function() {
-          container.detach();        
+          container.detach();
         });
       }
-      
+
       canvas.detach();
       menu.detach();
       menu.mark();
@@ -743,7 +743,7 @@ chrome.extension.sendRequest({name: "getPrefs"}, function(prefs) {
       menu.mark();
     }
   });
-  
+
   // if marking menu is popped, don't show context menu
   $doc.bind("contextmenu", function(event) {
     if (popped) {

@@ -1,6 +1,6 @@
-<!--  
+<!--
  * Copyright 2011 Chang-Hung Liang
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -15,130 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml"> 
-<head> 
-<title>mkmenu Options</title> 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
-<link href="options.css" rel="stylesheet" type="text/css"/> 
-<script type="text/javascript" src="jquery-1.6.4.min.js"></script>
-<script type="text/javascript">
-
-var Prefs = chrome.extension.getBackgroundPage().Prefs;
-
-function L(msgName, substitutions) {
-  return chrome.i18n.getMessage(msgName, substitutions);
-}
-
-function loadForm() {
-  $("#modifier-key-" + Prefs.modKey).prop("checked", true);
-  $("#mouse-button-" + Prefs.mouseButton).prop("checked", true);
-  for (var i = 0; i < Prefs.searchEngines.length; i++) {
-    var $nameField = $("#engine-name-" + i);
-    var $urlField = $("#engine-url-" + i);
-    var engine = Prefs.searchEngines[i];
-    if (engine.name != "") {
-      $nameField.val(engine.name).removeClass("empty-field");
-    } else {
-      $nameField.val(L("optEngineNameHint")).addClass("empty-field");
-    }
-    if (engine.url != "") {
-      $urlField.val(engine.url).removeClass("empty-field");
-    } else {
-      $urlField.val(L("optEngineURLHint")).addClass("empty-field");
-    }
-  }
-}
-
-function setupFieldsHint(cssSelector, hintMsgName) {
-  $(cssSelector).focus(function() {
-    var $this = $(this);
-    if ($this.hasClass("empty-field")) {
-      $this.val("").removeClass("empty-field");
-    }
-  }).blur(function() {
-    var $this = $(this);
-    if ($this.val() == "") {
-      $this.val(L(hintMsgName)).addClass("empty-field");
-    }
-  });
-}
-
-function replaceLocaleMessages() {
-  $(".locale-msg").each(function() {
-    var $this = $(this);
-    var msgName = $this.html();
-    if (msgName != "") {
-      $this.html(L(msgName));
-    }
-  });
-}
-
-function saveForm() {
-  Prefs.modKey = $("input[name='modifier-key']:checked").val();
-  Prefs.mouseButton = parseInt($("input[name='mouse-button']:checked").val());
-  for (var i = 0; i < 8; i++) {
-    var $nameField = $("#engine-name-" + i);
-    var $urlField = $("#engine-url-" + i);
-    var nameEmpty = $nameField.hasClass("empty-field");
-    var urlEmpty = $urlField.hasClass("empty-field");
-    if (nameEmpty || urlEmpty) {
-      Prefs.cmdsText[i] = null;
-    } else {
-      Prefs.cmdsText[i] = "cmdSearch" + i;
-    }
-    Prefs.searchEngines[i].name = nameEmpty ? "" : $nameField.val();
-    Prefs.searchEngines[i].url = urlEmpty ? "" : $urlField.val();
-  }
-  Prefs.save();
-}
-
-function resetForm() {
-  Prefs.reset();
-  loadForm();
-}
-
-$(function() {
-  Prefs.load();
-  loadForm();
-  setupFieldsHint(".engine-name", "optEngineNameHint");
-  setupFieldsHint(".engine-url", "optEngineURLHint");
-  replaceLocaleMessages();
-   
-  $("input").change(function() {
-    $("#save-btn").removeAttr("disabled");
-    $("#reset-btn").removeAttr("disabled");
-    $("#save-hint").css("display", "inline");
-  });
-   
-  $("#save-btn").click(function() {
-    $(this).attr("disabled", "disabled");
-    saveForm();
-    $("#save-hint").css("display", "none");
-  });
-  
-  $("#reset-btn").click(function() {
-    $(this).attr("disabled", "disabled");
-    $("#save-btn").removeAttr("disabled");
-    resetForm();
-    $("#save-hint").css("display", "inline");
-  });
-});
-
-</script>
-
-<script type="text/javascript">
-/* <![CDATA[ */
-    (function() {
-        var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
-        s.type = 'text/javascript';
-        s.async = true;
-        s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
-        t.parentNode.insertBefore(s, t);
-    })();
-/* ]]> */</script>
-
-</head> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>mkmenu Options</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="options.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="options.js"></script>
+</head>
 <body>
 
 <h1 id="header"><img src="icon_48.png" alt="mkmenu" width="48" height="48" class="logo"/>mkmenu <span class="locale-msg">optCaptionOptions</span></h1>
