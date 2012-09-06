@@ -83,6 +83,7 @@ var Prefs = {
           for (var i in localObj) {
             this[i] = localObj[i];
           }
+          this.save();
         } else {
           this.reset();
         }
